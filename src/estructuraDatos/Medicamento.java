@@ -23,9 +23,19 @@ public class Medicamento extends Productos {
      * @param descripcion
      * @param precio
      * @param unidades
+     * @param comoTomar
+     * @param efectosAdversos
      */
-    public Medicamento(String codigo, String nombre, String descripcion, double precio, int unidades) {
+    public Medicamento(String codigo, String nombre, String descripcion, double precio, int unidades, String comoTomar, String efectosAdversos) {
         super(codigo, nombre, descripcion, precio, unidades);
+        this.comoTomar = comoTomar;
+        this.efectosAdversos = efectosAdversos;
+    }
+
+    @Override
+    public String toString() {
+        String datosMedicamento = "Código: " + this.codigo + "\nNombre: " + this.nombre + "\nDescripción: " + this.descripcion + "\nPrecio: " + this.precio + "\nUnidades: " + this.unidades + "\nToma del medicamento: " + this.comoTomar + "\nEfectos adversos: " + this.efectosAdversos;
+        return datosMedicamento;
     }
 
     ///****************************Métodos getter****************************///

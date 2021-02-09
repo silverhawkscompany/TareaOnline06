@@ -23,9 +23,19 @@ public class ParaFarmacia extends Productos {
      * @param descripcion
      * @param precio
      * @param unidades
+     * @param dosisUnidades
+     * @param descuento
      */
-    public ParaFarmacia(String codigo, String nombre, String descripcion, double precio, int unidades) {
+    public ParaFarmacia(String codigo, String nombre, String descripcion, double precio, int unidades, int dosisUnidades, double descuento) {
         super(codigo, nombre, descripcion, precio, unidades);
+        this.dosisUnidades = dosisUnidades;
+        this.descuento = descuento;
+    }
+
+    @Override
+    public String toString() {
+        String datosParaFarmacia = "Código: " + this.codigo + "\nNombre: " + this.nombre + "\nDescripción: " + this.descripcion + "\nPrecio: " + this.precio + "\nUnidades: " + this.unidades + "\nDosis de las unidades: " + this.dosisUnidades + "\nDescuento: " + this.descuento;
+        return datosParaFarmacia;
     }
 
     ///****************************Métodos getter****************************///

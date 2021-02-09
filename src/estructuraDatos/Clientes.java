@@ -11,6 +11,7 @@ public class Clientes {
     private String nombre;
     private String direccion;
     private int telefono;
+    private boolean baja;
 
     /**
      * Método constructor
@@ -25,6 +26,13 @@ public class Clientes {
         this.nombre = nombre;
         this.direccion = direccion;
         this.telefono = telefono;
+        this.baja = false;
+    }
+
+    @Override
+    public String toString() {
+        String datosCliente = "DNI: " + this.id + "\nNombre: " + this.nombre + "\nTeléfono: " + this.telefono + "\nDirección: " + this.direccion;
+        return datosCliente;
     }
 
     ///****************************Métodos getter****************************///
@@ -60,6 +68,14 @@ public class Clientes {
         return this.telefono;
     }
 
+    /**
+     *
+     * @return Devuelve si el cliente esta de baja
+     */
+    public boolean getBaja() {
+        return baja;
+    }
+
     ///****************************Métodos setter****************************///
     /**
      *
@@ -93,9 +109,11 @@ public class Clientes {
         this.telefono = telefono;
     }
 
-    @Override
-    public String toString() {
-        String datosCliente = "DNI: " + this.id + "\nNombre: " + this.nombre + "\nTeléfono: " + this.telefono + "\nDirección: " + this.direccion;
-        return datosCliente;
+    /**
+     *
+     * @param baja
+     */
+    public void setBaja(boolean baja) {
+        this.baja = baja;
     }
 }

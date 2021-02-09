@@ -11,11 +11,11 @@ import utilidades.IO_ES;
  */
 public class Productos {
 
-    private String codigo;
-    private String nombre;
-    private String descripcion;
-    private double precio;
-    private int unidades;
+    protected String codigo;
+    protected String nombre;
+    protected String descripcion;
+    protected double precio;
+    protected int unidades;
 
     /**
      * Método constructor
