@@ -88,7 +88,7 @@ public class IO_ES {
      * @param frase Introducimos como parámetro la cadena de texto para indicar
      * que dato introducir
      * @param min Número minimo que debemos introducir
-     * @param max Número minimo que debemos introducir
+     * @param max Número maximo que debemos introducir
      * @return Devuelve un número entero
      */
     public static int leerInteger(String frase, int min, int max) {

@@ -1,5 +1,6 @@
 package principal;
 
+import Utilidades.Color;
 import utilidades.*;
 import estructuraDatos.*;
 
@@ -16,18 +17,18 @@ public class DiazGonzalezDaniel_Online05 {
     public static void main(String[] args) {
         boolean correcto = false;
         int opciones;
-        MISCLIENTES[0] = new Clientes("77812475W", "Daniel", "Calle 1", 123456);
-        MISCLIENTES[1] = new Clientes("11812475S", "Elisabeth", "Calle 2", 789012);
+        //MISCLIENTES[0] = new Clientes("77812475W", "Daniel", "Calle 1", 123456);
+        //MISCLIENTES[1] = new Clientes("12345678Z", "Elisabeth", "Calle 2", 789012);
 
-        IO_ES.escribirLN("BIENVENIDOS A LA APLICACIÓN DE FARMACIA");
+        IO_ES.escribirLN(Color.azul() + "BIENVENIDOS A LA APLICACIÓN DE FARMACIA");
         do {
-            IO_ES.escribirLN("---------------------------------------");
-            IO_ES.escribirLN("               LA BOTÍCA               ");
-            IO_ES.escribirLN("---------------------------------------");
+            IO_ES.escribirLN(Color.azul() + "---------------------------------------");
+            IO_ES.escribirLN(Color.azul() + "               LA BOTÍCA               ");
+            IO_ES.escribirLN(Color.azul() + "---------------------------------------" + Color.reset());
             IO_ES.escribirLN("1.  Añadir cliente \n2.  Dar de baja cliente \n3.  Modificar cliente \n4.  Mostrar clientes");
-            IO_ES.escribirLN("\n5.  Añadir producto \n6.  Eliminar producto \n7.  Modificar producto \n8.  Añadir unidades \n9.  Quitar unidades \n10. Mostrar productos");
-            IO_ES.escribirLN("0.  Salir");
+            IO_ES.escribirLN("\n5.  Añadir producto \n6.  Eliminar producto \n7.  Modificar producto \n8.  Añadir unidades \n9.  Quitar unidades \n10. Mostrar productos \n0.  Salir");
             opciones = IO_ES.leerInteger("Introduzca una opción: ", 0, 10);
+
             switch (opciones) {
                 case 1:
                     aniadirClientes();
@@ -67,10 +68,11 @@ public class DiazGonzalezDaniel_Online05 {
 
     }
 
-    private static final Clientes[] MISCLIENTES = new Clientes[50];
+    private static final int TAMANIO_ARRAY = 50;
+
+    private static final Clientes[] MISCLIENTES = new Clientes[TAMANIO_ARRAY];
     private static int contadorClientes = 0;
 
-    private static final int TAMANIO_ARRAY = 50;
     private static final Medicamento[] MISMEDICAMENTOS = new Medicamento[TAMANIO_ARRAY];
     private static final ParaFarmacia[] MISPARAFARMACIA = new ParaFarmacia[TAMANIO_ARRAY];
     private static int contadorMedicamento = 0;
@@ -141,12 +143,12 @@ public class DiazGonzalezDaniel_Online05 {
 
             MISCLIENTES[contadorClientes] = new Clientes(id, nombre, direccion, telefono);
             contadorClientes++;
-            IO_ES.escribirLN("Cliente añadido");
+            IO_ES.escribirLN(Color.verde() + "Cliente añadido" + Color.reset());
         }
     }
 
     /**
-     * Método para eliminar un cliente
+     * Método para dar de baja a un cliente
      */
     public static void bajaCliente() {
         String buscar;
@@ -155,15 +157,17 @@ public class DiazGonzalezDaniel_Online05 {
 
         IO_ES.escribirLN("\n---------------------------------------");
         IO_ES.escribirLN("DAR DE BAJA CLIENTE");
-        buscar = IO_ES.leerCadena("Introduzca el DNI: ", 9);
-        for (int i = 0; i < MISCLIENTES.length; i++) {
-            if (MISCLIENTES[i] != null && MISCLIENTES[i].getBaja() != true && buscarClientes(buscar) && !encontrado) {
+        buscar = IO_ES.leerCadena("Introduzca el DNI/NIF: ", 9);
+        for (int i = 0; i < MISCLIENTES.length && !encontrado; i++) {
+            if (MISCLIENTES[i] != null && MISCLIENTES[i].getBaja() != true && buscarClientes(buscar) && MISCLIENTES[i].getId().equalsIgnoreCase(buscar)) {
                 encontrado = true;
                 IO_ES.leerCadena(MISCLIENTES[i].toString());
-                baja = IO_ES.leerBoleano("Indica si quieres dar de baja al cliente: ");
+                baja = IO_ES.leerBoleano("¿Quieres si quieres dar de baja al cliente?: ");
                 MISCLIENTES[i].setBaja(baja);
                 IO_ES.escribirLN("El cliente se ha dado de baja");
-                contadorClientes--;
+            }
+            if (!encontrado && MISCLIENTES[i].getBaja() == true) {
+                IO_ES.escribirLN("El cliente ya estaba dado de baja");
             }
         }
         if (!encontrado) {
@@ -172,7 +176,7 @@ public class DiazGonzalezDaniel_Online05 {
     }
 
     /**
-     * Método para modificar un cliente
+     * Método para modificar los datos de un cliente
      */
     public static void modificarCliente() {
         int opciones;
@@ -184,10 +188,14 @@ public class DiazGonzalezDaniel_Online05 {
         buscar = IO_ES.leerCadena("Introduzca el DNI/NIF: ", 9);
         if (buscarClientes(buscar)) {
             for (int i = 0; i < MISCLIENTES.length; i++) {
-                IO_ES.leerCadena(MISCLIENTES[i].toString());
+                if (MISCLIENTES[i] != null && MISCLIENTES[i].getId().equalsIgnoreCase(buscar)) {
+                    IO_ES.escribirLN("\n---------------------------------------");
+                    IO_ES.leerCadena(MISCLIENTES[i].toString());
+                }
             }
             do {
-                IO_ES.escribirLN("1. Nombre \n2. Dirección \n3. Teléfono \n0. Salir");
+                IO_ES.escribirLN("\n---------------------------------------");
+                IO_ES.escribirLN("1. Nombre \n2. Dirección \n3. Teléfono \n4. Alta\n0. Salir");
                 opciones = IO_ES.leerInteger("Elige una opción para modificar del cliente: ", 0, 4);
                 switch (opciones) {
                     case 1:
@@ -213,7 +221,19 @@ public class DiazGonzalezDaniel_Online05 {
                                 MISCLIENTES[i].setTelefono(telefonoNuevo);
                             }
                         }
-
+                        break;
+                    case 4:
+                        boolean encontrado = false;
+                        boolean baja = IO_ES.leerBoleano("¿Quieres dar de alta al cliente?: ");
+                        for (int i = 0; i < MISCLIENTES.length; i++) {
+                            if (MISCLIENTES[i] != null && MISCLIENTES[i].getId().equalsIgnoreCase(buscar) && baja) {
+                                encontrado = true;
+                                MISCLIENTES[i].setBaja(false);
+                            }
+                            if (MISCLIENTES[i] != null && MISCLIENTES[i].getBaja() == false && !encontrado) {
+                                IO_ES.escribirLN("El cliente se encuentra dado de alta");
+                            }
+                        }
                         break;
                     case 0:
                         correcto = true;
@@ -235,15 +255,16 @@ public class DiazGonzalezDaniel_Online05 {
         boolean encontrado = false;
 
         IO_ES.escribirLN("\n---------------------------------------");
-        IO_ES.escribirLN("1. Mostrar todos los clientes \n2. Buscar un clientes \n3. Mostrar los clientes dado de baja \n0. Salir");
-        opciones = IO_ES.leerInteger("Elige una opción: ", 0, 4);
+        IO_ES.escribirLN("MOSTRAR CLIENTES");
+        IO_ES.escribirLN("1. Mostrar todos los clientes \n2. Buscar un cliente \n3. Mostrar los clientes dado de baja \n0. Salir");
+        opciones = IO_ES.leerInteger("Elige una opción: ", 0, 3);
         switch (opciones) {
             case 1:
                 for (int i = 0; i < MISCLIENTES.length; i++) {
                     if (MISCLIENTES[i] != null && MISCLIENTES[i].getBaja() != true) {
+                        encontrado = true;
                         IO_ES.escribirLN("---------------------------------------");
                         IO_ES.escribirLN(MISCLIENTES[i].toString());
-                        encontrado = true;
                     }
                 }
                 if (!encontrado) {
@@ -252,11 +273,15 @@ public class DiazGonzalezDaniel_Online05 {
                 break;
             case 2:
                 buscar = IO_ES.leerCadena("Introduzca el DNI/NIF: ", 9);
-                for (int i = 0; i < MISCLIENTES.length; i++) {
-                    if (MISCLIENTES[i] != null && buscarClientes(buscar) && MISCLIENTES[i].getBaja() != true && !encontrado) {
+                for (int i = 0; i < MISCLIENTES.length && !encontrado; i++) {
+                    if (MISCLIENTES[i] != null && MISCLIENTES[i].getId().equalsIgnoreCase(buscar) && MISCLIENTES[i].getBaja() != true) {
+                        encontrado = true;
                         IO_ES.escribirLN("---------------------------------------");
                         IO_ES.escribirLN(MISCLIENTES[i].toString());
+                    }
+                    if (MISCLIENTES[i] != null && MISCLIENTES[i].getBaja()) {
                         encontrado = true;
+                        IO_ES.escribirLN("El cliente esta dado de baja");
                     }
                 }
                 if (!encontrado) {
