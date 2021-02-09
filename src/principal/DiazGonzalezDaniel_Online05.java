@@ -17,8 +17,8 @@ public class DiazGonzalezDaniel_Online05 {
     public static void main(String[] args) {
         boolean correcto = false;
         int opciones;
-        //MISCLIENTES[0] = new Clientes("77812475W", "Daniel", "Calle 1", 123456);
-        //MISCLIENTES[1] = new Clientes("12345678Z", "Elisabeth", "Calle 2", 789012);
+        MISCLIENTES[0] = new Clientes("77812475W", "Daniel", "Calle 1", 123456);
+        MISCLIENTES[1] = new Clientes("12345678Z", "Elisabeth", "Calle 2", 789012);
 
         IO_ES.escribirLN(Color.azul() + "BIENVENIDOS A LA APLICACIÓN DE FARMACIA");
         do {
@@ -159,19 +159,23 @@ public class DiazGonzalezDaniel_Online05 {
         IO_ES.escribirLN("DAR DE BAJA CLIENTE");
         buscar = IO_ES.leerCadena("Introduzca el DNI/NIF: ", 9);
         for (int i = 0; i < MISCLIENTES.length && !encontrado; i++) {
-            if (MISCLIENTES[i] != null && MISCLIENTES[i].getBaja() != true && buscarClientes(buscar) && MISCLIENTES[i].getId().equalsIgnoreCase(buscar)) {
+            if (MISCLIENTES[i] != null && MISCLIENTES[i].getId().equalsIgnoreCase(buscar)) {
                 encontrado = true;
-                IO_ES.leerCadena(MISCLIENTES[i].toString());
-                baja = IO_ES.leerBoleano("¿Quieres si quieres dar de baja al cliente?: ");
-                MISCLIENTES[i].setBaja(baja);
-                IO_ES.escribirLN("El cliente se ha dado de baja");
+                IO_ES.escribirLN("---------------------------------------");
+                IO_ES.escribirLN(MISCLIENTES[i].toString());
             }
-            if (!encontrado && MISCLIENTES[i].getBaja() == true) {
-                IO_ES.escribirLN("El cliente ya estaba dado de baja");
+            baja = IO_ES.leerBoleano("¿Quieres dar de baja al cliente?: ");
+            if (encontrado && baja) {
+                if (MISCLIENTES[i].getBaja() == false) {
+                    MISCLIENTES[i].setBaja(baja);
+                    IO_ES.escribirLN(Color.verde() + "El cliente se ha dado de baja" + Color.reset());
+                } else {
+                    IO_ES.escribirLN(Color.rojo() + "El cliente se encuentra dado de baja" + Color.reset());
+                }
             }
         }
         if (!encontrado) {
-            IO_ES.escribirLN("El cliente no se encuentra en la base de datos");
+            IO_ES.escribirLN(Color.rojo() + "El cliente no se encuentra en la base de datos" + Color.reset());
         }
     }
 
@@ -182,20 +186,22 @@ public class DiazGonzalezDaniel_Online05 {
         int opciones;
         String buscar;
         boolean correcto = false;
+        boolean encontrado = false;
 
         IO_ES.escribirLN("\n---------------------------------------");
         IO_ES.escribirLN("MODIFICAR CLIENTE");
         buscar = IO_ES.leerCadena("Introduzca el DNI/NIF: ", 9);
-        if (buscarClientes(buscar)) {
-            for (int i = 0; i < MISCLIENTES.length; i++) {
-                if (MISCLIENTES[i] != null && MISCLIENTES[i].getId().equalsIgnoreCase(buscar)) {
-                    IO_ES.escribirLN("\n---------------------------------------");
-                    IO_ES.leerCadena(MISCLIENTES[i].toString());
-                }
+        for (int i = 0; i < MISCLIENTES.length && !encontrado; i++) {
+            if (MISCLIENTES[i] != null && MISCLIENTES[i].getId().equalsIgnoreCase(buscar)) {
+                encontrado = true;
+                IO_ES.escribirLN("---------------------------------------");
+                IO_ES.escribirLN(MISCLIENTES[i].toString());
             }
+        }
+        if (encontrado) {
             do {
-                IO_ES.escribirLN("\n---------------------------------------");
-                IO_ES.escribirLN("1. Nombre \n2. Dirección \n3. Teléfono \n4. Alta\n0. Salir");
+                IO_ES.escribirLN("---------------------------------------");
+                IO_ES.escribirLN("1. Nombre \n2. Dirección \n3. Teléfono \n4. Alta \n0. Salir");
                 opciones = IO_ES.leerInteger("Elige una opción para modificar del cliente: ", 0, 4);
                 switch (opciones) {
                     case 1:
@@ -223,15 +229,18 @@ public class DiazGonzalezDaniel_Online05 {
                         }
                         break;
                     case 4:
-                        boolean encontrado = false;
-                        boolean baja = IO_ES.leerBoleano("¿Quieres dar de alta al cliente?: ");
+                        boolean alta = IO_ES.leerBoleano("¿Quieres dar de alta al cliente?: ");
                         for (int i = 0; i < MISCLIENTES.length; i++) {
-                            if (MISCLIENTES[i] != null && MISCLIENTES[i].getId().equalsIgnoreCase(buscar) && baja) {
-                                encontrado = true;
-                                MISCLIENTES[i].setBaja(false);
+                            if (MISCLIENTES[i] != null && MISCLIENTES[i].getId().equalsIgnoreCase(buscar) && alta) {
+                                if (MISCLIENTES[i].getBaja() == false) {
+                                    IO_ES.escribirLN(Color.rojo() + "El cliente se encuentra dado de alta" + Color.reset());
+                                } else {
+                                    MISCLIENTES[i].setBaja(false);
+                                    IO_ES.escribirLN(Color.verde() + "El cliente se ha dado de alta" + Color.reset());
+                                }
                             }
-                            if (MISCLIENTES[i] != null && MISCLIENTES[i].getBaja() == false && !encontrado) {
-                                IO_ES.escribirLN("El cliente se encuentra dado de alta");
+                            if (MISCLIENTES[i] != null && MISCLIENTES[i].getId().equalsIgnoreCase(buscar) && !alta) {
+
                             }
                         }
                         break;
@@ -239,11 +248,12 @@ public class DiazGonzalezDaniel_Online05 {
                         correcto = true;
                         break;
                 }
-
             } while (correcto == false);
-        } else {
-            IO_ES.escribirLN("El cliente no se encuentra en la base de datos");
         }
+        if (!encontrado) {
+            IO_ES.escribirLN(Color.rojo() + "El cliente no se encuentra en la base de datos" + Color.reset());
+        }
+
     }
 
     /**
@@ -268,7 +278,7 @@ public class DiazGonzalezDaniel_Online05 {
                     }
                 }
                 if (!encontrado) {
-                    IO_ES.escribirLN("La base de datos de clientes esta vacia");
+                    IO_ES.escribirLN(Color.rojo() + "La base de datos de clientes esta vacia" + Color.reset());
                 }
                 break;
             case 2:
@@ -281,11 +291,11 @@ public class DiazGonzalezDaniel_Online05 {
                     }
                     if (MISCLIENTES[i] != null && MISCLIENTES[i].getBaja()) {
                         encontrado = true;
-                        IO_ES.escribirLN("El cliente esta dado de baja");
+                        IO_ES.escribirLN(Color.rojo() + "El cliente esta dado de baja" + Color.reset());
                     }
                 }
                 if (!encontrado) {
-                    IO_ES.escribirLN("El cliente no se ha encontrado");
+                    IO_ES.escribirLN(Color.rojo() + "El cliente no se ha encontrado" + Color.reset());
                 }
                 break;
             case 3:
@@ -297,7 +307,7 @@ public class DiazGonzalezDaniel_Online05 {
                     }
                 }
                 if (!encontrado) {
-                    IO_ES.escribirLN("No hay clientes dados de baja");
+                    IO_ES.escribirLN(Color.rojo() + "No hay clientes dados de baja" + Color.reset());
                 }
                 break;
             case 0:
