@@ -28,7 +28,7 @@ public class principal {
             IO_ES.escribirLN("1.  Añadir cliente \n2.  Dar de baja cliente \n3.  Modificar cliente \n4.  Mostrar clientes");
             IO_ES.escribirLN("\n5.  Añadir producto \n6.  Eliminar producto \n7.  Modificar producto \n8.  Añadir unidades \n9.  Quitar unidades \n10. Mostrar productos \n0.  Salir");
             opciones = IO_ES.leerInteger("Introduzca una opción: ", 0, 10);
-
+            
             switch (opciones) {
                 case 1:
                     aniadirClientes();
@@ -65,14 +65,14 @@ public class principal {
                     break;
             }
         } while (correcto == false);
-
+        
     }
-
+    
     private static final int TAMANIO_ARRAY = 50;
-
+    
     private static final Clientes[] MISCLIENTES = new Clientes[TAMANIO_ARRAY];
     private static int contadorClientes = 0;
-
+    
     private static final Medicamento[] MISMEDICAMENTOS = new Medicamento[TAMANIO_ARRAY];
     private static final ParaFarmacia[] MISPARAFARMACIA = new ParaFarmacia[TAMANIO_ARRAY];
     private static int contadorMedicamento = 0;
@@ -122,7 +122,7 @@ public class principal {
                 }
             }
         }
-
+        
         return encontrado;
     }
 
@@ -132,7 +132,7 @@ public class principal {
     public static void aniadirClientes() {
         String id, nombre, direccion;
         int telefono;
-
+        
         IO_ES.escribirLN("\n---------------------------------------");
         IO_ES.escribirLN("AÑADIR CLIENTE");
         id = IO_ES.leerCadena("Introduzca el NIF/DNI del cliente: ", 9);
@@ -147,7 +147,10 @@ public class principal {
             } else {
                 IO_ES.escribirLN(Color.rojo() + "El numero de teléfono no es correcto" + Color.reset());
             }
-
+            
+        }
+        if (!ValidarDatos.validarNif(id)) {
+            IO_ES.escribirLN(Color.rojo() + "El DNI/NIF es incorrecto" + Color.reset());
         }
         if (buscarClientes(id)) {
             IO_ES.escribirLN(Color.rojo() + "Ya hay un cliente dado de alta con ese DNI/NIF" + Color.reset());
@@ -161,7 +164,7 @@ public class principal {
         String buscar;
         boolean encontrado = false;
         boolean baja = false;
-
+        
         IO_ES.escribirLN("\n---------------------------------------");
         IO_ES.escribirLN("DAR DE BAJA CLIENTE");
         buscar = IO_ES.leerCadena("Introduzca el DNI/NIF: ", 9);
@@ -194,7 +197,7 @@ public class principal {
         String buscar;
         boolean correcto = false;
         boolean encontrado = false;
-
+        
         IO_ES.escribirLN("\n---------------------------------------");
         IO_ES.escribirLN("MODIFICAR CLIENTE");
         buscar = IO_ES.leerCadena("Introduzca el DNI/NIF: ", 9);
@@ -247,7 +250,7 @@ public class principal {
                                 }
                             }
                             if (MISCLIENTES[i] != null && MISCLIENTES[i].getId().equalsIgnoreCase(buscar) && !alta) {
-
+                                
                             }
                         }
                         break;
@@ -260,7 +263,7 @@ public class principal {
         if (!encontrado) {
             IO_ES.escribirLN(Color.rojo() + "El cliente no se encuentra en la base de datos" + Color.reset());
         }
-
+        
     }
 
     /**
@@ -270,7 +273,7 @@ public class principal {
         int opciones;
         String buscar;
         boolean encontrado = false;
-
+        
         IO_ES.escribirLN("\n---------------------------------------");
         IO_ES.escribirLN("MOSTRAR CLIENTES");
         IO_ES.escribirLN("1. Mostrar todos los clientes \n2. Buscar un cliente \n3. Mostrar los clientes dado de baja \n0. Salir");
@@ -334,7 +337,7 @@ public class principal {
         boolean encontrado = false;
         boolean correcto = false;
         int tipoProducto;
-
+        
         IO_ES.escribirLN("\n---------------------------------------");
         IO_ES.escribirLN("AÑADIR PRODUCTO");
         do {
@@ -403,7 +406,7 @@ public class principal {
                     break;
             }
         } while (correcto == false);
-
+        
     }
 
     /**
@@ -412,7 +415,7 @@ public class principal {
     public static void mostrarProductos() {
         int opciones;
         boolean encontrado = false;
-
+        
         IO_ES.escribirLN("\n---------------------------------------");
         IO_ES.escribirLN("1. Mostrar todos los productos \n2. Buscar un producto \n0. Salir");
         opciones = IO_ES.leerInteger("Escoge una opción: ", 0, 3);
@@ -447,7 +450,7 @@ public class principal {
     public static void eliminarProducto() {
         String buscar;
         boolean encontrado = false;
-
+        
         IO_ES.escribirLN("\n---------------------------------------");
         IO_ES.escribirLN("ELIMINAR PRODUCTO");
         buscar = IO_ES.leerCadena("Indique el código del producto: ");
@@ -473,7 +476,7 @@ public class principal {
         int opciones;
         String buscar;
         boolean correcto = false;
-
+        
         IO_ES.escribirLN("\n---------------------------------------");
         IO_ES.escribirLN("MODIFICAR PRODUCTO");
         buscar = IO_ES.leerCadena("Introduzca el código del producto: ");
@@ -529,7 +532,7 @@ public class principal {
         int unidadesAniadidas;
         String buscar;
         boolean encontrado = false;
-
+        
         IO_ES.escribirLN("\n---------------------------------------");
         IO_ES.escribirLN("AÑADIR UNIDADES");
         buscar = IO_ES.leerCadena("Indica el código del producto: ");
@@ -556,7 +559,7 @@ public class principal {
         String buscar;
         boolean encontrado = false;
         int unidadesEliminadas;
-
+        
         IO_ES.escribirLN("\n---------------------------------------");
         IO_ES.escribirLN("ELIMINAR UNIDADES");
         buscar = IO_ES.leerCadena("Indica el código del producto: ");

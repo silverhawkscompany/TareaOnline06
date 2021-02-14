@@ -40,10 +40,8 @@ public class ValidarDatos {
             String letra = letra_dni[resto];
 
             if (letra.equalsIgnoreCase(id.substring(8))) {
-                IO_ES.escribirLN("DNI correcto");
                 valido = true;
             } else {
-                IO_ES.escribirLN("DNI incorrecto");
                 valido = false;
             }
         }
@@ -71,10 +69,8 @@ public class ValidarDatos {
                 String resta = Integer.toString(diferencia);
                 //Asignación de letra
                 if (resta.equalsIgnoreCase(id.substring(8))) {
-                    System.out.println("NIF correcto");
                     valido = true;
                 } else {
-                    System.out.println("NIF incorrecto");
                     valido = false;
                 }
             }
@@ -100,10 +96,8 @@ public class ValidarDatos {
                 //Asignación de letra
                 String letra = letra_nif[diferencia];
                 if (letra.equalsIgnoreCase(id.substring(8))) {
-                    System.out.println("NIF correcto");
                     valido = true;
                 } else {
-                    System.out.println("NIF incorrecto");
                     valido = false;
                 }
             }
