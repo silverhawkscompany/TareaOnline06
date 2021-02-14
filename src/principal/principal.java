@@ -9,7 +9,7 @@ import estructuraDatos.*;
  * @author Daniel Díaz González
  * @version 1.0
  */
-public class DiazGonzalezDaniel_Online05 {
+public class principal {
 
     /**
      * @param args Menu principal donde se inicia la ejecución del programa
@@ -17,8 +17,8 @@ public class DiazGonzalezDaniel_Online05 {
     public static void main(String[] args) {
         boolean correcto = false;
         int opciones;
-        MISCLIENTES[0] = new Clientes("77812475W", "Daniel", "Calle 1", 123456);
-        MISCLIENTES[1] = new Clientes("12345678Z", "Elisabeth", "Calle 2", 789012);
+        //MISCLIENTES[0] = new Clientes("77812475W", "Daniel", "Calle 1", 123456);
+        //MISCLIENTES[1] = new Clientes("12345678Z", "Elisabeth", "Calle 2", 789012);
 
         IO_ES.escribirLN(Color.azul() + "BIENVENIDOS A LA APLICACIÓN DE FARMACIA");
         do {
@@ -140,10 +140,17 @@ public class DiazGonzalezDaniel_Online05 {
             nombre = IO_ES.leerCadena("Introduzca el nombre: ");
             direccion = IO_ES.leerCadena("Introduzca la dirección: ");
             telefono = IO_ES.leerInteger("Introduzca el teléfono: ");
+            if (ValidarDatos.validarTelefono(telefono)) {
+                MISCLIENTES[contadorClientes] = new Clientes(id, nombre, direccion, telefono);
+                contadorClientes++;
+                IO_ES.escribirLN(Color.verde() + "Cliente añadido" + Color.reset());
+            } else {
+                IO_ES.escribirLN(Color.rojo() + "El numero de teléfono no es correcto" + Color.reset());
+            }
 
-            MISCLIENTES[contadorClientes] = new Clientes(id, nombre, direccion, telefono);
-            contadorClientes++;
-            IO_ES.escribirLN(Color.verde() + "Cliente añadido" + Color.reset());
+        }
+        if (buscarClientes(id)) {
+            IO_ES.escribirLN(Color.rojo() + "Ya hay un cliente dado de alta con ese DNI/NIF" + Color.reset());
         }
     }
 
@@ -153,7 +160,7 @@ public class DiazGonzalezDaniel_Online05 {
     public static void bajaCliente() {
         String buscar;
         boolean encontrado = false;
-        boolean baja;
+        boolean baja = false;
 
         IO_ES.escribirLN("\n---------------------------------------");
         IO_ES.escribirLN("DAR DE BAJA CLIENTE");
@@ -163,14 +170,14 @@ public class DiazGonzalezDaniel_Online05 {
                 encontrado = true;
                 IO_ES.escribirLN("---------------------------------------");
                 IO_ES.escribirLN(MISCLIENTES[i].toString());
+                baja = IO_ES.leerBoleano("¿Quieres dar de baja al cliente?: ");
             }
-            baja = IO_ES.leerBoleano("¿Quieres dar de baja al cliente?: ");
             if (encontrado && baja) {
                 if (MISCLIENTES[i].getBaja() == false) {
                     MISCLIENTES[i].setBaja(baja);
                     IO_ES.escribirLN(Color.verde() + "El cliente se ha dado de baja" + Color.reset());
                 } else {
-                    IO_ES.escribirLN(Color.rojo() + "El cliente se encuentra dado de baja" + Color.reset());
+                    IO_ES.escribirLN(Color.rojo() + "El cliente ya estaba dado de baja" + Color.reset());
                 }
             }
         }
@@ -233,7 +240,7 @@ public class DiazGonzalezDaniel_Online05 {
                         for (int i = 0; i < MISCLIENTES.length; i++) {
                             if (MISCLIENTES[i] != null && MISCLIENTES[i].getId().equalsIgnoreCase(buscar) && alta) {
                                 if (MISCLIENTES[i].getBaja() == false) {
-                                    IO_ES.escribirLN(Color.rojo() + "El cliente se encuentra dado de alta" + Color.reset());
+                                    IO_ES.escribirLN(Color.rojo() + "El cliente ya estaba dado de alta" + Color.reset());
                                 } else {
                                     MISCLIENTES[i].setBaja(false);
                                     IO_ES.escribirLN(Color.verde() + "El cliente se ha dado de alta" + Color.reset());

@@ -111,4 +111,19 @@ public class ValidarDatos {
 
         return valido;
     }
+
+    /**
+     *
+     * @param telefono Nuemero de teléfono para verificar
+     * @return Devuleve true o false según sea valido o no el número
+     */
+    public static boolean validarTelefono(int telefono) {
+        String s;
+
+        s = Integer.toString(telefono);
+        Pattern p = Pattern.compile("[0-9]{9}");
+        Matcher m = p.matcher(s);
+
+        return m.matches();
+    }
 }
