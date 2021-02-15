@@ -19,6 +19,8 @@ public class principal {
         int opciones;
         //MISCLIENTES[0] = new Clientes("77812475W", "Daniel", "Calle 1", 123456);
         //MISCLIENTES[1] = new Clientes("12345678Z", "Elisabeth", "Calle 2", 789012);
+        //MISPRODUCTOS [0] = new Medicamento("1234567891234", "Med 01", "AAA", 12.50, 100, "Oral", "Ninguno");
+        //MISPRODUCTOS [1] = new ParaFarmacia("9999991999999", "Par 01", "BBB", 42.50, 50, 5, 10);
 
         IO_ES.escribirLN(Color.azul() + "BIENVENIDOS A LA APLICACIÓN DE FARMACIA");
         do {
