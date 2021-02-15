@@ -16,10 +16,10 @@ public class principal {
     public static void main(String[] args) {
         boolean correcto = false;
         int opciones;
-        //MISCLIENTES[0] = new Clientes("77812475W", "Daniel", "Calle 1", 123456);
-        //MISCLIENTES[1] = new Clientes("12345678Z", "Elisabeth", "Calle 2", 789012);
-        //MISPRODUCTOS [0] = new Medicamento("1234567891234", "Med 01", "AAA", 12.50, 100, "Oral", "Ninguno");
-        //MISPRODUCTOS [1] = new ParaFarmacia("9999991999999", "Par 01", "BBB", 42.50, 50, 5, 10);
+        MISCLIENTES[0] = new Clientes("77812475W", "Daniel", "Calle 1", 123456);
+        MISCLIENTES[1] = new Clientes("12345678Z", "Elisabeth", "Calle 2", 789012);
+        MISPRODUCTOS[0] = new Medicamento("1234567891234", "Med 01", "AAA", 12.50, 100, "Oral", "Ninguno");
+        MISPRODUCTOS[1] = new ParaFarmacia("9999991999999", "Par 01", "BBB", 42.50, 50, 5, 10);
 
         IO_ES.escribirLN(Color.azul() + "BIENVENIDOS A LA APLICACIÓN DE FARMACIA");
         do {
@@ -77,11 +77,12 @@ public class principal {
     private static final Productos[] MISPRODUCTOS = new Productos[TAMANIO_ARRAY];
     private static int contadorProdcutos = 0;
 
-    private static final Medicamento[] MISMEDICAMENTOS = new Medicamento[TAMANIO_ARRAY];
-    private static final ParaFarmacia[] MISPARAFARMACIA = new ParaFarmacia[TAMANIO_ARRAY];
-    private static int contadorMedicamento = 0;
-    private static int contadorParaFarmacia = 0;
-
+    /*
+     * private static final Medicamento[] MISMEDICAMENTOS = new
+     * Medicamento[TAMANIO_ARRAY]; private static final ParaFarmacia[]
+     * MISPARAFARMACIA = new ParaFarmacia[TAMANIO_ARRAY]; private static int
+     * contadorMedicamento = 0; private static int contadorParaFarmacia = 0;
+     */
     /**
      *
      * @param id DNI o NIF del cliente que deseamos buscar
@@ -204,6 +205,7 @@ public class principal {
                         for (int i = 0; i < MISCLIENTES.length; i++) {
                             if (MISCLIENTES[i] != null && MISCLIENTES[i].getId().equalsIgnoreCase(buscar)) {
                                 MISCLIENTES[i].setNombre(nombreNuevo);
+                                IO_ES.escribirLN(Color.verde() + "El nombre se ha modificado" + Color.reset());
                             }
                         }
                         break;
@@ -212,16 +214,23 @@ public class principal {
                         for (int i = 0; i < MISCLIENTES.length; i++) {
                             if (MISCLIENTES[i] != null && MISCLIENTES[i].getId().equalsIgnoreCase(buscar)) {
                                 MISCLIENTES[i].setDireccion(dirreccionNuevo);
+                                IO_ES.escribirLN(Color.verde() + "La dirección se ha modificado" + Color.reset());
                             }
                         }
                         break;
                     case 3:
                         int telefonoNuevo = IO_ES.leerInteger("Escribe el nuevo teléfono: ");
-                        for (int i = 0; i < MISCLIENTES.length; i++) {
-                            if (MISCLIENTES[i] != null && MISCLIENTES[i].getId().equalsIgnoreCase(buscar)) {
-                                MISCLIENTES[i].setTelefono(telefonoNuevo);
+                        if (ValidarDatos.validarTelefono(telefonoNuevo)) {
+                            for (int i = 0; i < MISCLIENTES.length; i++) {
+                                if (MISCLIENTES[i] != null && MISCLIENTES[i].getId().equalsIgnoreCase(buscar)) {
+                                    MISCLIENTES[i].setTelefono(telefonoNuevo);
+                                    IO_ES.escribirLN(Color.verde() + "El número de teléfono se ha modificado" + Color.reset());
+                                }
                             }
+                        } else {
+                            IO_ES.escribirLN(Color.rojo() + "El numero de teléfono no es correcto" + Color.reset());
                         }
+
                         break;
                     case 4:
                         boolean alta = IO_ES.leerBoleano("¿Quieres dar de alta al cliente?: ");
@@ -279,7 +288,7 @@ public class principal {
             case 2:
                 buscar = IO_ES.leerCadena("Introduzca el DNI/NIF: ", 9);
                 for (int i = 0; i < MISCLIENTES.length && !encontrado; i++) {
-                    if (MISCLIENTES[i] != null && MISCLIENTES[i].getId().equalsIgnoreCase(buscar) && MISCLIENTES[i].getBaja() != true) {
+                    if (MISCLIENTES[i] != null && buscarClientes(buscar) && MISCLIENTES[i].getBaja() != true) {
                         encontrado = true;
                         IO_ES.escribirLN("---------------------------------------");
                         IO_ES.escribirLN(MISCLIENTES[i].toString());
@@ -418,7 +427,7 @@ public class principal {
             case 2:
                 String codigo = IO_ES.leerCadena("Indica el código del producto: ");
                 for (int i = 0; i < MISPRODUCTOS.length; i++) {
-                    if (MISPRODUCTOS[i] != null && buscarProductos(codigo)) {
+                    if (MISPRODUCTOS[i] != null && MISPRODUCTOS[i].getCodigo().equalsIgnoreCase(codigo)) {
                         encontrado = true;
                         IO_ES.escribirLN("---------------------------------------");
                         IO_ES.escribirLN(MISPRODUCTOS[i].toString());
@@ -449,7 +458,7 @@ public class principal {
                 encontrado = true;
                 IO_ES.escribirLN("---------------------------------------");
                 IO_ES.escribirLN(MISPRODUCTOS[i].toString());
-                MISMEDICAMENTOS[i] = null;
+                MISPRODUCTOS[i] = null;
                 IO_ES.escribirLN("El producto se ha eliminado correctamente");
                 contadorProdcutos--;
             }
@@ -466,33 +475,52 @@ public class principal {
         int opciones;
         String buscar;
         boolean correcto = false;
+        boolean encontrado = false;
 
         IO_ES.escribirLN("\n---------------------------------------");
         IO_ES.escribirLN("MODIFICAR PRODUCTO");
         buscar = IO_ES.leerCadena("Introduzca el código del producto: ");
-        for (int i = 0; i < MISPRODUCTOS.length; i++) {
-            if (MISPRODUCTOS[i] != null && buscarProductos(buscar)) {
+        for (int i = 0; i < MISPRODUCTOS.length && !encontrado; i++) {
+            if (MISPRODUCTOS[i] != null && MISPRODUCTOS[i].getCodigo().equalsIgnoreCase(buscar)) {
+                encontrado = true;
                 IO_ES.escribirLN("---------------------------------------");
                 IO_ES.escribirLN(MISPRODUCTOS[i].toString());
             }
-            if (!buscarProductos(buscar)) {
-                IO_ES.escribirLN(Color.rojo() + "El producto no se encuentra en la base de datos" + Color.reset());
-            }
+        }
+        if (!encontrado) {
+            IO_ES.escribirLN(Color.rojo() + "El producto no se encuentra en la base de datos" + Color.reset());
+        }
+        if (encontrado) {
             do {
                 IO_ES.escribirLN("1. Nombre \n2. Descripción \n3. Precio \n0. Salir");
                 opciones = IO_ES.leerInteger("Elige una opción para modificar del producto: ", 0, 3);
                 switch (opciones) {
                     case 1:
                         String nuevoNombre = IO_ES.leerCadena("Escribe el nuevo nombre: ");
-                        MISMEDICAMENTOS[i].setNombre(nuevoNombre);
+                        for (int i = 0; i < MISPRODUCTOS.length; i++) {
+                            if (MISPRODUCTOS[i] != null && MISPRODUCTOS[i].getCodigo().equalsIgnoreCase(buscar)) {
+                                MISPRODUCTOS[i].setNombre(nuevoNombre);
+                                IO_ES.escribirLN(Color.verde() + "El nombre se ha modificado" + Color.reset());
+                            }
+                        }
                         break;
                     case 2:
                         String nuevaDescripcion = IO_ES.leerCadena("Escribe la nueva descripcion: ");
-                        MISMEDICAMENTOS[i].setDescripcion(nuevaDescripcion);
+                        for (int i = 0; i < MISPRODUCTOS.length; i++) {
+                            if (MISPRODUCTOS[i] != null && MISPRODUCTOS[i].getCodigo().equalsIgnoreCase(buscar)) {
+                                MISPRODUCTOS[i].setDescripcion(nuevaDescripcion);
+                                IO_ES.escribirLN(Color.verde() + "La descripción se ha modificado" + Color.reset());
+                            }
+                        }
                         break;
                     case 3:
                         double nuevoPrecio = IO_ES.leerReallargo("Escribe el nuevo precio: ");
-                        MISMEDICAMENTOS[i].setPrecio(nuevoPrecio);
+                        for (int i = 0; i < MISPRODUCTOS.length; i++) {
+                            if (MISPRODUCTOS[i] != null && MISPRODUCTOS[i].getCodigo().equalsIgnoreCase(buscar)) {
+                                MISPRODUCTOS[i].setPrecio(nuevoPrecio);
+                                IO_ES.escribirLN(Color.verde() + "El precio se ha modificado" + Color.reset());
+                            }
+                        }
                         break;
                     case 0:
                         correcto = true;
