@@ -1,6 +1,5 @@
 package principal;
 
-import Utilidades.Color;
 import utilidades.*;
 import estructuraDatos.*;
 
