@@ -88,6 +88,7 @@ public class Productos {
         boolean permitido;
         if (unidades > 0) {
             if (unidades > this.unidades) {
+                IO_ES.escribirLN("Se han eliminado todas las unidades del producto: " + this.unidades);
                 this.unidades -= this.unidades;
             } else {
                 this.unidades -= unidades;

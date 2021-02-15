@@ -28,7 +28,7 @@ public class principal {
             IO_ES.escribirLN("1.  Añadir cliente \n2.  Dar de baja cliente \n3.  Modificar cliente \n4.  Mostrar clientes");
             IO_ES.escribirLN("\n5.  Añadir producto \n6.  Eliminar producto \n7.  Modificar producto \n8.  Añadir unidades \n9.  Quitar unidades \n10. Mostrar productos \n0.  Salir");
             opciones = IO_ES.leerInteger("Introduzca una opción: ", 0, 10);
-            
+
             switch (opciones) {
                 case 1:
                     aniadirClientes();
@@ -65,14 +65,17 @@ public class principal {
                     break;
             }
         } while (correcto == false);
-        
+
     }
-    
+
     private static final int TAMANIO_ARRAY = 50;
-    
+
     private static final Clientes[] MISCLIENTES = new Clientes[TAMANIO_ARRAY];
     private static int contadorClientes = 0;
-    
+
+    private static final Productos[] MISPRODUCTOS = new Productos[TAMANIO_ARRAY];
+    private static int contadorProdcutos = 0;
+
     private static final Medicamento[] MISMEDICAMENTOS = new Medicamento[TAMANIO_ARRAY];
     private static final ParaFarmacia[] MISPARAFARMACIA = new ParaFarmacia[TAMANIO_ARRAY];
     private static int contadorMedicamento = 0;
@@ -96,33 +99,15 @@ public class principal {
     /**
      *
      * @param codigo Código del producto que deseamos buscar
-     * @param mostrarArray Si el valor es "0" no muestra el Array, si es "1" si
-     * lo muestra
      * @return Devuelve true o false, si encuentra el producto
      */
-    public static boolean buscarProductos(String codigo, int mostrarArray) {
+    public static boolean buscarProductos(String codigo) {
         boolean encontrado = false;
-        if (mostrarArray == 0) {
-            for (int i = 0; i < MISMEDICAMENTOS.length; i++) {
-                if (MISMEDICAMENTOS[i] != null) {
-                    if (MISMEDICAMENTOS[i].getCodigo().equalsIgnoreCase(codigo)) {
-                        encontrado = true;
-                    }
-                }
+        for (int i = 0; i < MISPRODUCTOS.length; i++) {
+            if (MISPRODUCTOS[i] != null && MISPRODUCTOS[i].getCodigo().equalsIgnoreCase(codigo)) {
+                encontrado = true;
             }
         }
-        if (mostrarArray == 1) {
-            for (int i = 0; i < MISMEDICAMENTOS.length; i++) {
-                if (MISMEDICAMENTOS[i] != null) {
-                    if (MISMEDICAMENTOS[i].getCodigo().equalsIgnoreCase(codigo)) {
-                        encontrado = true;
-                        IO_ES.escribirLN("---------------------------------------");
-                        IO_ES.escribirLN(MISMEDICAMENTOS[i].toString());
-                    }
-                }
-            }
-        }
-        
         return encontrado;
     }
 
@@ -132,7 +117,7 @@ public class principal {
     public static void aniadirClientes() {
         String id, nombre, direccion;
         int telefono;
-        
+
         IO_ES.escribirLN("\n---------------------------------------");
         IO_ES.escribirLN("AÑADIR CLIENTE");
         id = IO_ES.leerCadena("Introduzca el NIF/DNI del cliente: ", 9);
@@ -147,7 +132,7 @@ public class principal {
             } else {
                 IO_ES.escribirLN(Color.rojo() + "El numero de teléfono no es correcto" + Color.reset());
             }
-            
+
         }
         if (!ValidarDatos.validarNif(id)) {
             IO_ES.escribirLN(Color.rojo() + "El DNI/NIF es incorrecto" + Color.reset());
@@ -164,7 +149,7 @@ public class principal {
         String buscar;
         boolean encontrado = false;
         boolean baja = false;
-        
+
         IO_ES.escribirLN("\n---------------------------------------");
         IO_ES.escribirLN("DAR DE BAJA CLIENTE");
         buscar = IO_ES.leerCadena("Introduzca el DNI/NIF: ", 9);
@@ -197,7 +182,7 @@ public class principal {
         String buscar;
         boolean correcto = false;
         boolean encontrado = false;
-        
+
         IO_ES.escribirLN("\n---------------------------------------");
         IO_ES.escribirLN("MODIFICAR CLIENTE");
         buscar = IO_ES.leerCadena("Introduzca el DNI/NIF: ", 9);
@@ -250,7 +235,7 @@ public class principal {
                                 }
                             }
                             if (MISCLIENTES[i] != null && MISCLIENTES[i].getId().equalsIgnoreCase(buscar) && !alta) {
-                                
+
                             }
                         }
                         break;
@@ -263,7 +248,7 @@ public class principal {
         if (!encontrado) {
             IO_ES.escribirLN(Color.rojo() + "El cliente no se encuentra en la base de datos" + Color.reset());
         }
-        
+
     }
 
     /**
@@ -273,7 +258,7 @@ public class principal {
         int opciones;
         String buscar;
         boolean encontrado = false;
-        
+
         IO_ES.escribirLN("\n---------------------------------------");
         IO_ES.escribirLN("MOSTRAR CLIENTES");
         IO_ES.escribirLN("1. Mostrar todos los clientes \n2. Buscar un cliente \n3. Mostrar los clientes dado de baja \n0. Salir");
@@ -337,7 +322,7 @@ public class principal {
         boolean encontrado = false;
         boolean correcto = false;
         int tipoProducto;
-        
+
         IO_ES.escribirLN("\n---------------------------------------");
         IO_ES.escribirLN("AÑADIR PRODUCTO");
         do {
@@ -345,19 +330,18 @@ public class principal {
             switch (tipoProducto) {
                 case 1:
                     codigo = IO_ES.leerCadena("Introduzca el código del medicamento: ");
-                    if (buscarProductos(codigo, 1)) {
-                        IO_ES.escribirLN("El código del medicamento ya esta asignado");
-                    } else {
+                    if (!Productos.comprobarCodigo(codigo)) {
                         codigo = "X";
                     }
-                    if (!buscarProductos(codigo, 0)) {
+                    if (buscarProductos(codigo)) {
+                        IO_ES.escribirLN("El código del medicamento ya esta asignado");
+                    }
+                    if (!buscarProductos(codigo)) {
                         nombre = IO_ES.leerCadena("Introduzca el nombre del medicamento: ");
-                        for (int i = 0; i < MISMEDICAMENTOS.length; i++) {
-                            if (MISMEDICAMENTOS[i] != null) {
-                                if (MISMEDICAMENTOS[i].getNombre().equalsIgnoreCase(nombre)) {
-                                    encontrado = true;
-                                    IO_ES.escribirLN("El nombre del medicamento ya esta asignado");
-                                }
+                        for (int i = 0; i < MISPRODUCTOS.length; i++) {
+                            if (MISPRODUCTOS[i] != null && MISPRODUCTOS[i].getNombre().equalsIgnoreCase(nombre)) {
+                                encontrado = true;
+                                IO_ES.escribirLN("El nombre del medicamento ya esta asignado");
                             }
                         }
                         if (!encontrado) {
@@ -366,27 +350,26 @@ public class principal {
                             unidades = IO_ES.leerInteger("Introduzca las unidades del medicamento: ", 0);
                             comoTomar = IO_ES.leerCadena("Introduzca el método para consumir el medicamento: ");
                             efectosAdversos = IO_ES.leerCadena("Introduzca los efectos adversos del medicamentos: ");
-                            MISMEDICAMENTOS[contadorMedicamento] = new Medicamento(codigo, nombre, descripcion, precio, unidades, comoTomar, efectosAdversos);
-                            contadorMedicamento++;
-                            IO_ES.escribirLN("Se ha añadido un medicamento");
+                            MISPRODUCTOS[contadorProdcutos] = new Medicamento(codigo, nombre, descripcion, precio, unidades, comoTomar, efectosAdversos);
+                            contadorProdcutos++;
+                            IO_ES.escribirLN(Color.verde() + "Se ha añadido un medicamento" + Color.reset());
                         }
                     }
                     break;
                 case 2:
                     codigo = IO_ES.leerCadena("Introduzca el código del producto de Parafarmacia: ");
-                    if (buscarProductos(codigo, 1)) {
-                        IO_ES.escribirLN("El código del producto ya esta asignado");
-                    } else {
+                    if (!Productos.comprobarCodigo(codigo)) {
                         codigo = "X";
                     }
-                    if (!buscarProductos(codigo, 0)) {
+                    if (buscarProductos(codigo)) {
+                        IO_ES.escribirLN(Color.rojo() + "El código del producto ya esta asignado" + Color.reset());
+                    }
+                    if (!buscarProductos(codigo)) {
                         nombre = IO_ES.leerCadena("Introduzca el nombre del producto de Parafarmacia: ");
-                        for (int i = 0; i < MISPARAFARMACIA.length; i++) {
-                            if (MISPARAFARMACIA[i] != null) {
-                                if (MISPARAFARMACIA[i].getNombre().equalsIgnoreCase(nombre)) {
-                                    encontrado = true;
-                                    IO_ES.escribirLN("El nombre del producto ya esta asignado");
-                                }
+                        for (int i = 0; i < MISPRODUCTOS.length; i++) {
+                            if (MISPRODUCTOS[i] != null && MISPRODUCTOS[i].getNombre().equalsIgnoreCase(nombre)) {
+                                encontrado = true;
+                                IO_ES.escribirLN(Color.rojo() + "El nombre del producto ya esta asignado" + Color.reset());
                             }
                         }
                         if (!encontrado) {
@@ -395,9 +378,9 @@ public class principal {
                             unidades = IO_ES.leerInteger("Introduzca las unidades del producto de Parafarmacia: ", 0);
                             dosisUnidades = IO_ES.leerInteger("Introduzca las unidades de las dosis: ", 0);
                             descuento = IO_ES.leerReallargo("Introduzca el descuento (en porcentaje): ");
-                            MISPARAFARMACIA[contadorMedicamento] = new ParaFarmacia(codigo, nombre, descripcion, precio, unidades, dosisUnidades, descuento);
-                            contadorParaFarmacia++;
-                            IO_ES.escribirLN("Se ha añadido un producto de Parafarmacia");
+                            MISPRODUCTOS[contadorProdcutos] = new ParaFarmacia(codigo, nombre, descripcion, precio, unidades, dosisUnidades, descuento);
+                            contadorProdcutos++;
+                            IO_ES.escribirLN(Color.verde() + "Se ha añadido un producto de Parafarmacia" + Color.reset());
                         }
                     }
                     break;
@@ -406,7 +389,7 @@ public class principal {
                     break;
             }
         } while (correcto == false);
-        
+
     }
 
     /**
@@ -415,29 +398,36 @@ public class principal {
     public static void mostrarProductos() {
         int opciones;
         boolean encontrado = false;
-        
+
         IO_ES.escribirLN("\n---------------------------------------");
         IO_ES.escribirLN("1. Mostrar todos los productos \n2. Buscar un producto \n0. Salir");
-        opciones = IO_ES.leerInteger("Escoge una opción: ", 0, 3);
+        opciones = IO_ES.leerInteger("Escoge una opción: ", 0, 2);
         switch (opciones) {
             case 1:
-                for (int i = 0; i < MISMEDICAMENTOS.length; i++) {
-                    if (MISMEDICAMENTOS[i] != null) {
-                        IO_ES.escribirLN("---------------------------------------");
-                        IO_ES.escribirLN(MISMEDICAMENTOS[i].toString());
+                for (int i = 0; i < MISPRODUCTOS.length; i++) {
+                    if (MISPRODUCTOS[i] != null) {
                         encontrado = true;
+                        IO_ES.escribirLN("---------------------------------------");
+                        IO_ES.escribirLN(MISPRODUCTOS[i].toString());
                     }
                 }
                 if (!encontrado) {
-                    IO_ES.escribirLN("La base de datos de productos esta vacia");
+                    IO_ES.escribirLN(Color.rojo() + "La base de datos de productos esta vacia" + Color.reset());
                 }
                 break;
             case 2:
                 String codigo = IO_ES.leerCadena("Indica el código del producto: ");
-                if (buscarProductos(codigo, 1)) {
-                } else {
-                    IO_ES.escribirLN("El producto no se encuentra en la base de datos");
+                for (int i = 0; i < MISPRODUCTOS.length; i++) {
+                    if (MISPRODUCTOS[i] != null && buscarProductos(codigo)) {
+                        encontrado = true;
+                        IO_ES.escribirLN("---------------------------------------");
+                        IO_ES.escribirLN(MISPRODUCTOS[i].toString());
+                    }
                 }
+                if (!encontrado) {
+                    IO_ES.escribirLN(Color.rojo() + "El producto no se encuentra en la base de datos" + Color.reset());
+                }
+
                 break;
             case 0:
                 break;
@@ -450,18 +440,18 @@ public class principal {
     public static void eliminarProducto() {
         String buscar;
         boolean encontrado = false;
-        
+
         IO_ES.escribirLN("\n---------------------------------------");
         IO_ES.escribirLN("ELIMINAR PRODUCTO");
         buscar = IO_ES.leerCadena("Indique el código del producto: ");
-        for (int i = 0; i < MISMEDICAMENTOS.length; i++) {
-            if (MISMEDICAMENTOS[i] != null) {
-                if (buscarProductos(buscar, 1)) {
-                    encontrado = true;
-                    MISMEDICAMENTOS[i] = null;
-                    IO_ES.escribirLN("El producto se ha eliminado correctamente");
-                    contadorMedicamento--;
-                }
+        for (int i = 0; i < MISPRODUCTOS.length; i++) {
+            if (MISPRODUCTOS[i] != null && buscarProductos(buscar)) {
+                encontrado = true;
+                IO_ES.escribirLN("---------------------------------------");
+                IO_ES.escribirLN(MISPRODUCTOS[i].toString());
+                MISMEDICAMENTOS[i] = null;
+                IO_ES.escribirLN("El producto se ha eliminado correctamente");
+                contadorProdcutos--;
             }
         }
         if (!encontrado) {
@@ -476,52 +466,39 @@ public class principal {
         int opciones;
         String buscar;
         boolean correcto = false;
-        
+
         IO_ES.escribirLN("\n---------------------------------------");
         IO_ES.escribirLN("MODIFICAR PRODUCTO");
         buscar = IO_ES.leerCadena("Introduzca el código del producto: ");
-        if (buscarProductos(buscar, 1)) {
+        for (int i = 0; i < MISPRODUCTOS.length; i++) {
+            if (MISPRODUCTOS[i] != null && buscarProductos(buscar)) {
+                IO_ES.escribirLN("---------------------------------------");
+                IO_ES.escribirLN(MISPRODUCTOS[i].toString());
+            }
+            if (!buscarProductos(buscar)) {
+                IO_ES.escribirLN(Color.rojo() + "El producto no se encuentra en la base de datos" + Color.reset());
+            }
             do {
                 IO_ES.escribirLN("1. Nombre \n2. Descripción \n3. Precio \n0. Salir");
-                opciones = IO_ES.leerInteger("Elige una opción para modificar del producto: ", 0, 4);
+                opciones = IO_ES.leerInteger("Elige una opción para modificar del producto: ", 0, 3);
                 switch (opciones) {
                     case 1:
                         String nuevoNombre = IO_ES.leerCadena("Escribe el nuevo nombre: ");
-                        for (int i = 0; i < MISMEDICAMENTOS.length; i++) {
-                            if (MISMEDICAMENTOS[i] != null) {
-                                if (MISMEDICAMENTOS[i].getCodigo().equalsIgnoreCase(buscar)) {
-                                    MISMEDICAMENTOS[i].setNombre(nuevoNombre);
-                                }
-                            }
-                        }
+                        MISMEDICAMENTOS[i].setNombre(nuevoNombre);
                         break;
                     case 2:
                         String nuevaDescripcion = IO_ES.leerCadena("Escribe la nueva descripcion: ");
-                        for (int i = 0; i < MISMEDICAMENTOS.length; i++) {
-                            if (MISMEDICAMENTOS[i] != null) {
-                                if (MISMEDICAMENTOS[i].getCodigo().equalsIgnoreCase(buscar)) {
-                                    MISMEDICAMENTOS[i].setDescripcion(nuevaDescripcion);
-                                }
-                            }
-                        }
+                        MISMEDICAMENTOS[i].setDescripcion(nuevaDescripcion);
                         break;
                     case 3:
                         double nuevoPrecio = IO_ES.leerReallargo("Escribe el nuevo precio: ");
-                        for (int i = 0; i < MISMEDICAMENTOS.length; i++) {
-                            if (MISMEDICAMENTOS[i] != null) {
-                                if (MISMEDICAMENTOS[i].getCodigo().equalsIgnoreCase(buscar)) {
-                                    MISMEDICAMENTOS[i].setPrecio(nuevoPrecio);
-                                }
-                            }
-                        }
+                        MISMEDICAMENTOS[i].setPrecio(nuevoPrecio);
                         break;
                     case 0:
                         correcto = true;
                         break;
                 }
             } while (correcto == false);
-        } else {
-            IO_ES.escribirLN("El producto no se encuentra en la base de datos");
         }
     }
 
@@ -532,23 +509,23 @@ public class principal {
         int unidadesAniadidas;
         String buscar;
         boolean encontrado = false;
-        
+
         IO_ES.escribirLN("\n---------------------------------------");
         IO_ES.escribirLN("AÑADIR UNIDADES");
         buscar = IO_ES.leerCadena("Indica el código del producto: ");
-        for (int i = 0; i < MISMEDICAMENTOS.length; i++) {
-            if (MISMEDICAMENTOS[i] != null) {
-                if (MISMEDICAMENTOS[i].getCodigo().equalsIgnoreCase(buscar)) {
-                    encontrado = true;
-                    IO_ES.escribirLN(MISMEDICAMENTOS[i].toString());
-                    unidadesAniadidas = IO_ES.leerInteger("Cuantas unidades vas a añadir: ");
-                    MISMEDICAMENTOS[i].aniadirUnidades(unidadesAniadidas);
-                    IO_ES.escribirLN("Las unidades se han añadido correctamente");
+        for (int i = 0; i < MISPRODUCTOS.length; i++) {
+            if (MISPRODUCTOS[i] != null && MISPRODUCTOS[i].getCodigo().equalsIgnoreCase(buscar)) {
+                encontrado = true;
+                IO_ES.escribirLN("\n---------------------------------------");
+                IO_ES.escribirLN(MISPRODUCTOS[i].toString());
+                unidadesAniadidas = IO_ES.leerInteger("Cuantas unidades vas a añadir: ");
+                if (MISPRODUCTOS[i].aniadirUnidades(unidadesAniadidas)) {
+                    IO_ES.escribirLN(Color.verde() + "Las unidades se han añadido correctamente" + Color.reset());
                 }
             }
         }
         if (!encontrado) {
-            IO_ES.escribirLN("El producto no se encuentra en la base de datos");
+            IO_ES.escribirLN(Color.rojo() + "El producto no se encuentra en la base de datos" + Color.reset());
         }
     }
 
@@ -559,23 +536,23 @@ public class principal {
         String buscar;
         boolean encontrado = false;
         int unidadesEliminadas;
-        
+
         IO_ES.escribirLN("\n---------------------------------------");
         IO_ES.escribirLN("ELIMINAR UNIDADES");
         buscar = IO_ES.leerCadena("Indica el código del producto: ");
-        for (int i = 0; i < MISMEDICAMENTOS.length; i++) {
-            if (MISMEDICAMENTOS[i] != null) {
-                if (MISMEDICAMENTOS[i].getCodigo().equalsIgnoreCase(buscar)) {
-                    encontrado = true;
-                    IO_ES.escribirLN(MISMEDICAMENTOS[i].toString());
-                    unidadesEliminadas = IO_ES.leerInteger("Cuantas unidades vas a eliminar: ");
-                    MISMEDICAMENTOS[i].quitarUnidades(unidadesEliminadas);
-                    IO_ES.escribirLN("Las unidades se han eliminado correctamente");
+        for (int i = 0; i < MISPRODUCTOS.length; i++) {
+            if (MISPRODUCTOS[i] != null && MISPRODUCTOS[i].getCodigo().equalsIgnoreCase(buscar)) {
+                encontrado = true;
+                IO_ES.escribirLN("\n---------------------------------------");
+                IO_ES.escribirLN(MISPRODUCTOS[i].toString());
+                unidadesEliminadas = IO_ES.leerInteger("Cuantas unidades vas a eliminar: ");
+                if (MISPRODUCTOS[i].quitarUnidades(unidadesEliminadas)) {
+                    IO_ES.escribirLN(Color.verde() + "Las unidades se han eliminado correctamente" + Color.reset());
                 }
             }
         }
         if (!encontrado) {
-            IO_ES.escribirLN("El producto no se encuentra en la base de datos");
+            IO_ES.escribirLN(Color.rojo() + "El producto no se encuentra en la base de datos" + Color.reset());
         }
     }
 }
