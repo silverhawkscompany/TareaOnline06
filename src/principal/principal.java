@@ -122,6 +122,9 @@ public class principal {
         IO_ES.escribirLN("\n---------------------------------------");
         IO_ES.escribirLN("AÑADIR CLIENTE");
         id = IO_ES.leerCadena("Introduzca el NIF/DNI del cliente: ", 9);
+        if (buscarClientes(id)) {
+            IO_ES.escribirLN(Color.rojo() + "Ya hay un cliente dado de alta con ese DNI/NIF" + Color.reset());
+        }
         if (ValidarDatos.validarNif(id) && !buscarClientes(id)) {
             nombre = IO_ES.leerCadena("Introduzca el nombre: ");
             direccion = IO_ES.leerCadena("Introduzca la dirección: ");
@@ -133,13 +136,9 @@ public class principal {
             } else {
                 IO_ES.escribirLN(Color.rojo() + "El numero de teléfono no es correcto" + Color.reset());
             }
-
         }
         if (!ValidarDatos.validarNif(id)) {
             IO_ES.escribirLN(Color.rojo() + "El DNI/NIF es incorrecto" + Color.reset());
-        }
-        if (buscarClientes(id)) {
-            IO_ES.escribirLN(Color.rojo() + "Ya hay un cliente dado de alta con ese DNI/NIF" + Color.reset());
         }
     }
 
