@@ -16,6 +16,8 @@ public class principal {
     public static void main(String[] args) {
         boolean correcto = false;
         int opciones;
+
+        //EJEMPLOS//
         MISCLIENTES[0] = new Clientes("77812475W", "Daniel", "Calle 1", 123456);
         MISCLIENTES[1] = new Clientes("12345678Z", "Elisabeth", "Calle 2", 789012);
         MISPRODUCTOS[0] = new Medicamento("1234567891234", "Med 01", "AAA", 12.50, 100, "Oral", "Ninguno");
@@ -74,15 +76,13 @@ public class principal {
     private static final Clientes[] MISCLIENTES = new Clientes[TAMANIO_ARRAY];
     private static int contadorClientes = 0;
 
-    private static final Productos[] MISPRODUCTOS = new Productos[TAMANIO_ARRAY];
+    private static Productos[] MISPRODUCTOS = new Productos[TAMANIO_ARRAY];
     private static int contadorProdcutos = 0;
 
-    /*
-     * private static final Medicamento[] MISMEDICAMENTOS = new
-     * Medicamento[TAMANIO_ARRAY]; private static final ParaFarmacia[]
-     * MISPARAFARMACIA = new ParaFarmacia[TAMANIO_ARRAY]; private static int
-     * contadorMedicamento = 0; private static int contadorParaFarmacia = 0;
-     */
+    //private static final Medicamento[] MISMEDICAMENTOS = new Medicamento[TAMANIO_ARRAY];
+    //private static final ParaFarmacia[] MISPARAFARMACIA = new ParaFarmacia[TAMANIO_ARRAY];
+    //private static int contadorMedicamento = 0;
+    //private static int contadorParaFarmacia = 0;
     /**
      *
      * @param id DNI o NIF del cliente que deseamos buscar

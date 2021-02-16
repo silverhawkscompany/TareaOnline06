@@ -9,7 +9,7 @@ import utilidades.IO_ES;
  * @author Daniel Díaz González
  * @version 1.0
  */
-public class Productos {
+abstract public class Productos {
 
     protected String codigo;
     protected String nombre;
