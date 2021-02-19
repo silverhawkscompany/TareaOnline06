@@ -1,5 +1,6 @@
 package principal;
 
+import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
 import utilidades.*;
 import estructuraDatos.*;
 
@@ -72,17 +73,11 @@ public class principal {
     }
 
     private static final int TAMANIO_ARRAY = 50;
-
     private static final Clientes[] MISCLIENTES = new Clientes[TAMANIO_ARRAY];
     private static int contadorClientes = 0;
-
     private static Productos[] MISPRODUCTOS = new Productos[TAMANIO_ARRAY];
     private static int contadorProdcutos = 0;
 
-    //private static final Medicamento[] MISMEDICAMENTOS = new Medicamento[TAMANIO_ARRAY];
-    //private static final ParaFarmacia[] MISPARAFARMACIA = new ParaFarmacia[TAMANIO_ARRAY];
-    //private static int contadorMedicamento = 0;
-    //private static int contadorParaFarmacia = 0;
     /**
      *
      * @param id DNI o NIF del cliente que deseamos buscar
@@ -492,39 +487,81 @@ public class principal {
         }
         if (encontrado) {
             do {
-                IO_ES.escribirLN("1. Nombre \n2. Descripción \n3. Precio \n0. Salir");
-                opciones = IO_ES.leerInteger("Elige una opción para modificar del producto: ", 0, 3);
-                switch (opciones) {
-                    case 1:
-                        String nuevoNombre = IO_ES.leerCadena("Escribe el nuevo nombre: ");
-                        for (int i = 0; i < MISPRODUCTOS.length; i++) {
-                            if (MISPRODUCTOS[i] != null && MISPRODUCTOS[i].getCodigo().equalsIgnoreCase(buscar)) {
+                for (int i = 0; i < MISPRODUCTOS.length; i++) {
+                    if (MISPRODUCTOS[i] instanceof Medicamento && MISPRODUCTOS[i] != null && MISPRODUCTOS[i].getCodigo().equalsIgnoreCase(buscar)) {
+                        IO_ES.escribirLN("---------------------------------------");
+                        IO_ES.escribirLN("1. Nombre \n2. Descripción \n3. Precio \n4. Toma del medicamento \n5. Efectos adversos\n0. Salir");
+                        opciones = IO_ES.leerInteger("Elige una opción para modificar del producto: ", 0, 5);
+                        switch (opciones) {
+                            case 1:
+                                String nuevoNombre = IO_ES.leerCadena("Escribe el nuevo nombre: ");
                                 MISPRODUCTOS[i].setNombre(nuevoNombre);
                                 IO_ES.escribirLN(Color.verde() + "El nombre se ha modificado" + Color.reset());
-                            }
-                        }
-                        break;
-                    case 2:
-                        String nuevaDescripcion = IO_ES.leerCadena("Escribe la nueva descripcion: ");
-                        for (int i = 0; i < MISPRODUCTOS.length; i++) {
-                            if (MISPRODUCTOS[i] != null && MISPRODUCTOS[i].getCodigo().equalsIgnoreCase(buscar)) {
+                                break;
+                            case 2:
+                                String nuevaDescripcion = IO_ES.leerCadena("Escribe la nueva descripcion: ");
                                 MISPRODUCTOS[i].setDescripcion(nuevaDescripcion);
                                 IO_ES.escribirLN(Color.verde() + "La descripción se ha modificado" + Color.reset());
-                            }
-                        }
-                        break;
-                    case 3:
-                        double nuevoPrecio = IO_ES.leerReallargo("Escribe el nuevo precio: ");
-                        for (int i = 0; i < MISPRODUCTOS.length; i++) {
-                            if (MISPRODUCTOS[i] != null && MISPRODUCTOS[i].getCodigo().equalsIgnoreCase(buscar)) {
+                                break;
+                            case 3:
+                                double nuevoPrecio = IO_ES.leerReallargo("Escribe el nuevo precio: ");
                                 MISPRODUCTOS[i].setPrecio(nuevoPrecio);
                                 IO_ES.escribirLN(Color.verde() + "El precio se ha modificado" + Color.reset());
-                            }
+                                break;
+                            case 4:
+                                String nuevaToma = IO_ES.leerCadena("Escribe la nueva toma del medicamento: ");
+                                Medicamento referencia = (Medicamento) MISPRODUCTOS[i];
+                                referencia.setComoTomar(nuevaToma);
+                                IO_ES.escribirLN(Color.verde() + "La toma se ha modificado" + Color.reset());
+                                break;
+                            case 5:
+                                String nuevoEfectos = IO_ES.leerCadena("Escribe los nuevos efectos adversos del medicamento: ");
+                                Medicamento referencia2 = (Medicamento) MISPRODUCTOS[i];
+                                referencia2.setEfectosAdversos(nuevoEfectos);
+                                IO_ES.escribirLN(Color.verde() + "Los efectos adversos se ha modificado" + Color.reset());
+                                break;
+                            case 0:
+                                correcto = true;
+                                break;
                         }
-                        break;
-                    case 0:
-                        correcto = true;
-                        break;
+                    }
+                    if (MISPRODUCTOS[i] instanceof ParaFarmacia && MISPRODUCTOS[i] != null && MISPRODUCTOS[i].getCodigo().equalsIgnoreCase(buscar)) {
+                        IO_ES.escribirLN("---------------------------------------");
+                        IO_ES.escribirLN("1. Nombre \n2. Descripción \n3. Precio \n4. Dosis de unidades \n5. Descuento \n0. Salir");
+                        opciones = IO_ES.leerInteger("Elige una opción para modificar del producto: ", 0, 5);
+                        switch (opciones) {
+                            case 1:
+                                String nuevoNombre = IO_ES.leerCadena("Escribe el nuevo nombre: ");
+                                MISPRODUCTOS[i].setNombre(nuevoNombre);
+                                IO_ES.escribirLN(Color.verde() + "El nombre se ha modificado" + Color.reset());
+                                break;
+                            case 2:
+                                String nuevaDescripcion = IO_ES.leerCadena("Escribe la nueva descripcion: ");
+                                MISPRODUCTOS[i].setDescripcion(nuevaDescripcion);
+                                IO_ES.escribirLN(Color.verde() + "La descripción se ha modificado" + Color.reset());
+                                break;
+                            case 3:
+                                double nuevoPrecio = IO_ES.leerReallargo("Escribe el nuevo precio: ");
+                                MISPRODUCTOS[i].setPrecio(nuevoPrecio);
+                                IO_ES.escribirLN(Color.verde() + "El precio se ha modificado" + Color.reset());
+                                break;
+                            case 4:
+                                int nuevaDosis = IO_ES.leerInteger("Escribe la nueva dosis del producto: ");
+                                ParaFarmacia referencia = (ParaFarmacia) MISPRODUCTOS[i];
+                                referencia.setDosisUnidades(nuevaDosis);
+                                IO_ES.escribirLN(Color.verde() + "La dosis se ha modificado" + Color.reset());
+                                break;
+                            case 5:
+                                double nuevoDescuento = IO_ES.leerReallargo("Escribe el nuevo descuento del producto: ");
+                                ParaFarmacia referencia2 = (ParaFarmacia) MISPRODUCTOS[i];
+                                referencia2.setDescuento(nuevoDescuento);
+                                IO_ES.escribirLN(Color.verde() + "El descuento se ha modificado" + Color.reset());
+                                break;
+                            case 0:
+                                correcto = true;
+                                break;
+                        }
+                    }
                 }
             } while (correcto == false);
         }
