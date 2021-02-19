@@ -1,6 +1,5 @@
 package principal;
 
-import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
 import utilidades.*;
 import estructuraDatos.*;
 
@@ -9,7 +8,7 @@ import estructuraDatos.*;
  * @author Daniel Díaz González
  * @version 1.0
  */
-public class principal {
+public class CPrincipal {
 
     /**
      * @param args Menu principal donde se inicia la ejecución del programa
@@ -393,7 +392,6 @@ public class principal {
                     break;
             }
         } while (correcto == false);
-
     }
 
     /**
