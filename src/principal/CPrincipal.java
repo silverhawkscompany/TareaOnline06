@@ -149,19 +149,19 @@ public class CPrincipal {
         IO_ES.escribirLN("DAR DE BAJA CLIENTE");
         buscar = IO_ES.leerCadena("Introduzca el DNI/NIF: ", 9);
         for (int i = 0; i < MISCLIENTES.length && !encontrado; i++) {
-            if (MISCLIENTES[i] != null && MISCLIENTES[i].getId().equalsIgnoreCase(buscar)) {
+            if (MISCLIENTES[i] != null && MISCLIENTES[i].getId().equalsIgnoreCase(buscar) && MISCLIENTES[i].getBaja()) {
+                IO_ES.escribirLN(Color.rojo() + "El cliente ya estaba dado de baja" + Color.reset());
+                encontrado = true;
+            }
+            if (MISCLIENTES[i] != null && MISCLIENTES[i].getId().equalsIgnoreCase(buscar) && !MISCLIENTES[i].getBaja()) {
                 encontrado = true;
                 IO_ES.escribirLN("---------------------------------------");
                 IO_ES.escribirLN(MISCLIENTES[i].toString());
                 baja = IO_ES.leerBoleano("¿Quieres dar de baja al cliente?: ");
             }
             if (encontrado && baja) {
-                if (MISCLIENTES[i].getBaja() == false) {
-                    MISCLIENTES[i].setBaja(baja);
-                    IO_ES.escribirLN(Color.verde() + "El cliente se ha dado de baja" + Color.reset());
-                } else {
-                    IO_ES.escribirLN(Color.rojo() + "El cliente ya estaba dado de baja" + Color.reset());
-                }
+                MISCLIENTES[i].setBaja(baja);
+                IO_ES.escribirLN(Color.verde() + "El cliente se ha dado de baja" + Color.reset());
             }
         }
         if (!encontrado) {
