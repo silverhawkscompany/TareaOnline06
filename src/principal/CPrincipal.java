@@ -13,7 +13,11 @@ import estructuraDatos.Enumerados.Categoria;
  * @version 1.0
  */
 public class CPrincipal {
-
+    private static final int TAMANIO_ARRAY = 50;
+    private static final Cliente[] MISCLIENTES = new Cliente[TAMANIO_ARRAY];
+    private static int contadorClientes = 0;
+    private static Productos[] MISPRODUCTOS = new Productos[TAMANIO_ARRAY];
+    private static int contadorProdcutos = 0;
     /**
      * @param args Menu principal donde se inicia la ejecución del programa
      */
@@ -22,8 +26,8 @@ public class CPrincipal {
         int opciones;
 
         //EJEMPLOS//
-        MISCLIENTES[0] = new Clientes("77812475W", "Daniel", "Calle 1", 123456);
-        MISCLIENTES[1] = new Clientes("12345678Z", "Elisabeth", "Calle 2", 789012);
+        MISCLIENTES[0] = new Cliente("77812475W", "Daniel", "Calle 1", 123456);
+        MISCLIENTES[1] = new Cliente("12345678Z", "Elisabeth", "Calle 2", 789012);
         MISPRODUCTOS[0] = new Medicamento("1234567891234", "Med 01", "AAA", 12.50, 100, ANALGESICOS, "Oral", "Ninguno");
         MISPRODUCTOS[1] = new ParaFarmacia("9999991999999", "Par 01", "BBB", 42.50, 50, DENTAL, 5, 10);
 
@@ -75,25 +79,21 @@ public class CPrincipal {
 
     }
 
-    private static final int TAMANIO_ARRAY = 50;
-    private static final Clientes[] MISCLIENTES = new Clientes[TAMANIO_ARRAY];
-    private static int contadorClientes = 0;
-    private static Productos[] MISPRODUCTOS = new Productos[TAMANIO_ARRAY];
-    private static int contadorProdcutos = 0;
+    
 
     /**
      *
      * @param id DNI o NIF del cliente que deseamos buscar
      * @return Devuelve true o false, si el cliente ha sido encontrado
      */
-    public static boolean buscarClientes(String id) {
-        boolean encontrado = false;
+    public static Cliente buscarClientes(String id) {
+        Cliente cliente = null ;
         for (int i = 0; i < MISCLIENTES.length; i++) {
             if (MISCLIENTES[i] != null && MISCLIENTES[i].getId().equalsIgnoreCase(id)) {
-                encontrado = true;
+                cliente = MISCLIENTES[i];
             }
         }
-        return encontrado;
+        return cliente;
     }
 
     /**
@@ -101,14 +101,14 @@ public class CPrincipal {
      * @param codigo Código del producto que deseamos buscar
      * @return Devuelve true o false, si encuentra el producto
      */
-    public static boolean buscarProductos(String codigo) {
-        boolean encontrado = false;
+    public static Productos buscarProductos(String codigo) {
+        Productos productos = null;
         for (int i = 0; i < MISPRODUCTOS.length; i++) {
             if (MISPRODUCTOS[i] != null && MISPRODUCTOS[i].getCodigo().equalsIgnoreCase(codigo)) {
-                encontrado = true;
+                productos = MISPRODUCTOS[i];
             }
         }
-        return encontrado;
+        return productos;
     }
 
     /**
@@ -121,22 +121,22 @@ public class CPrincipal {
         IO_ES.escribirLN("\n---------------------------------------");
         IO_ES.escribirLN("AÑADIR CLIENTE");
         id = IO_ES.leerCadena("Introduzca el NIF/DNI del cliente: ", 9);
-        if (buscarClientes(id)) {
+        if (buscarClientes(id)!= null) {
             IO_ES.escribirLN(Color.rojo() + "Ya hay un cliente dado de alta con ese DNI/NIF" + Color.reset());
         }
-        if (ValidarDatos.validarNif(id) && !buscarClientes(id)) {
+        else if (ValidarDatos.validarNif(id)) {
             nombre = IO_ES.leerCadena("Introduzca el nombre: ");
             direccion = IO_ES.leerCadena("Introduzca la dirección: ");
             telefono = IO_ES.leerInteger("Introduzca el teléfono: ");
             if (ValidarDatos.validarTelefono(telefono)) {
-                MISCLIENTES[contadorClientes] = new Clientes(id, nombre, direccion, telefono);
+                MISCLIENTES[contadorClientes] = new Cliente(id, nombre, direccion, telefono);
                 contadorClientes++;
                 IO_ES.escribirLN(Color.verde() + "Cliente añadido" + Color.reset());
             } else {
                 IO_ES.escribirLN(Color.rojo() + "El numero de teléfono no es correcto" + Color.reset());
             }
         }
-        if (!ValidarDatos.validarNif(id)) {
+        else {
             IO_ES.escribirLN(Color.rojo() + "El DNI/NIF es incorrecto" + Color.reset());
         }
     }

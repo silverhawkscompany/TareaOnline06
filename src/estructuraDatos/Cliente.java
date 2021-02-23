@@ -5,7 +5,7 @@ package estructuraDatos;
  * @author Daniel Díaz González
  * @version 1.0
  */
-public class Clientes {
+public class Cliente {
 
     private String id;
     private String nombre;
@@ -21,7 +21,7 @@ public class Clientes {
      * @param direccion Dirección del cliente
      * @param telefono Teléfono del cliente
      */
-    public Clientes(String id, String nombre, String direccion, int telefono) {
+    public Cliente(String id, String nombre, String direccion, int telefono) {
         this.id = id;
         this.nombre = nombre;
         this.direccion = direccion;
