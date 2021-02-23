@@ -1,20 +1,17 @@
 package estructuraDatos;
 
+import estructuraDatos.Enumerados.TipoMedicamento;
+
 /**
  *
  * @author Daniel Díaz González
  * @version 1.0
  */
 public class Medicamento extends Productos {
-
+    private TipoMedicamento tipoMedicamento;
     private String comoTomar;
     private String efectosAdversos;
-
-    private enum TipoMedicamento {
-        ANALGESICOS, LAXANTES, ANTIINFECCIOSOS, ANTIDEPRESIVOS, ANTITUSIVOS, MUCOLITICOS, ANTIACIDOS,
-        ANTIULCEROSOS, ANTIALERGICOS, ANTIFIARREICOS
-    };
-
+    
     /**
      * Contructor de la clase Medicamentos
      *
@@ -23,22 +20,31 @@ public class Medicamento extends Productos {
      * @param descripcion
      * @param precio
      * @param unidades
+     * @param tipoMedicamento
      * @param comoTomar
      * @param efectosAdversos
      */
-    public Medicamento(String codigo, String nombre, String descripcion, double precio, int unidades, String comoTomar, String efectosAdversos) {
+    public Medicamento(String codigo, String nombre, String descripcion, double precio, int unidades, TipoMedicamento tipoMedicamento,String comoTomar, String efectosAdversos) {
         super(codigo, nombre, descripcion, precio, unidades);
+        this.tipoMedicamento = tipoMedicamento;
         this.comoTomar = comoTomar;
         this.efectosAdversos = efectosAdversos;
     }
 
     @Override
     public String toString() {
-        String datosMedicamento = "Código: " + this.codigo + "\nNombre: " + this.nombre + "\nDescripción: " + this.descripcion + "\nPrecio: " + this.precio + "\nUnidades: " + this.unidades + "\nToma del medicamento: " + this.comoTomar + "\nEfectos adversos: " + this.efectosAdversos;
+        String datosMedicamento = "Código: " + this.codigo + "\nNombre: " + this.nombre + "\nDescripción: " + this.descripcion + "\nPrecio: " + this.precio + "\nUnidades: " + this.unidades + "\nTipo del medicamento: " + this.tipoMedicamento + "\nToma del medicamento: "  + this.comoTomar + "\nEfectos adversos: " + this.efectosAdversos;
         return datosMedicamento;
     }
 
     ///****************************Métodos getter****************************///
+    /**
+     * 
+     * @return Devuelve el tipo de medicamento
+     */
+    public TipoMedicamento getTipoMedicamento(){
+        return this.tipoMedicamento;
+    }
     /**
      *
      * @return Devuelve como tomar un medicamento
@@ -56,6 +62,13 @@ public class Medicamento extends Productos {
     }
 
     ///****************************Métodos setter****************************///
+    /**
+     * 
+     * @param tipoMedicamento Nuevo tipo de medicamento
+     */
+    public void setTipoMedicamento(TipoMedicamento tipoMedicamento){
+        this.tipoMedicamento = tipoMedicamento;
+    }
     /**
      *
      * @param comoTomar Nueva forma de tomar un medicamento

@@ -1,20 +1,17 @@
 package estructuraDatos;
 
+import estructuraDatos.Enumerados.Categoria;
+
 /**
  *
  * @author Daniel Díaz González
  * @version 1.0
  */
 public class ParaFarmacia extends Productos {
-
+    private Categoria categoria;
     private int dosisUnidades;
     private double descuento;
-
-    private enum Categoria {
-        DENTAL, FACIAL, GELES, CORPORAL, CABELLO, ANTIMOSQUITOS, INTIMA,
-        NASAL, OCULAR, BOTIQUIN, OIDOS, TOALLITAS, LIMPIEZA, HOGAR, MASCARILLAS
-    }
-
+    
     /**
      * Contructor de la clase ParaFarmacia
      *
@@ -23,11 +20,13 @@ public class ParaFarmacia extends Productos {
      * @param descripcion
      * @param precio
      * @param unidades
+     * @param categoria
      * @param dosisUnidades
      * @param descuento
      */
-    public ParaFarmacia(String codigo, String nombre, String descripcion, double precio, int unidades, int dosisUnidades, double descuento) {
+    public ParaFarmacia(String codigo, String nombre, String descripcion, double precio, int unidades, Categoria categoria,int dosisUnidades, double descuento) {
         super(codigo, nombre, descripcion, precio, unidades);
+        this.categoria = categoria;
         this.dosisUnidades = dosisUnidades;
         this.descuento = descuento;
     }
@@ -39,6 +38,13 @@ public class ParaFarmacia extends Productos {
     }
 
     ///****************************Métodos getter****************************///
+    /**
+     * 
+     * @return Devuelve la categgoria del producto de Parafarmacia
+     */
+    public Categoria getCategoria(){
+        return this.categoria;
+    }
     /**
      *
      * @return Devuelve las dosis de cada producto
@@ -56,6 +62,13 @@ public class ParaFarmacia extends Productos {
     }
 
     ///****************************Métodos setter****************************///
+    /**
+     * 
+     * @param categoria Nueva categoria del producto de Parafarmacia
+     */
+    public void setCategoria(Categoria categoria){
+        this.categoria = categoria;
+    }
     /**
      *
      * @param dosisUnidades Nuevas dosis para el producto

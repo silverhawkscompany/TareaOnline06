@@ -2,6 +2,10 @@ package principal;
 
 import utilidades.*;
 import estructuraDatos.*;
+import static estructuraDatos.Enumerados.TipoMedicamento.*;
+import static estructuraDatos.Enumerados.Categoria.*;
+import estructuraDatos.Enumerados.TipoMedicamento;
+import estructuraDatos.Enumerados.Categoria;
 
 /**
  *
@@ -20,8 +24,8 @@ public class CPrincipal {
         //EJEMPLOS//
         MISCLIENTES[0] = new Clientes("77812475W", "Daniel", "Calle 1", 123456);
         MISCLIENTES[1] = new Clientes("12345678Z", "Elisabeth", "Calle 2", 789012);
-        MISPRODUCTOS[0] = new Medicamento("1234567891234", "Med 01", "AAA", 12.50, 100, "Oral", "Ninguno");
-        MISPRODUCTOS[1] = new ParaFarmacia("9999991999999", "Par 01", "BBB", 42.50, 50, 5, 10);
+        MISPRODUCTOS[0] = new Medicamento("1234567891234", "Med 01", "AAA", 12.50, 100, ANALGESICOS, "Oral", "Ninguno");
+        MISPRODUCTOS[1] = new ParaFarmacia("9999991999999", "Par 01", "BBB", 42.50, 50, DENTAL, 5, 10);
 
         IO_ES.escribirLN(Color.azul() + "BIENVENIDOS A LA APLICACIÓN DE FARMACIA");
         do {
@@ -318,6 +322,7 @@ public class CPrincipal {
      */
     public static void aniadirProducto() {
         String codigo, nombre, descripcion, comoTomar, efectosAdversos;
+        TipoMedicamento tipoMedicamento = TipoMedicamento.ANALGESICOS;
         int dosisUnidades;
         double descuento;
         double precio;
@@ -325,6 +330,7 @@ public class CPrincipal {
         boolean encontrado = false;
         boolean correcto = false;
         int tipoProducto;
+        int opciones;
 
         IO_ES.escribirLN("\n---------------------------------------");
         IO_ES.escribirLN("AÑADIR PRODUCTO");
@@ -351,9 +357,41 @@ public class CPrincipal {
                             descripcion = IO_ES.leerCadena("Introduzca la descripción del medicamento: ");
                             precio = IO_ES.leerReallargo("Introduzca el precio del medicamento: ");
                             unidades = IO_ES.leerInteger("Introduzca las unidades del medicamento: ", 0);
+                            IO_ES.escribirLN("1. ANALGESICOS \n2. LAXANTES \n3. ANTIINFECCIOSOS \n4. ANTIDEPRESIVOS \n4. ANTITUSIVOS \n5. MUCOLITICOS \n6. ANTIACIDOS \n7. ANTIULCEROSOS \n8. ANTIALERGICOS \n9. ANTIFIARREICO");
+                            opciones = IO_ES.leerInteger("Indique el tipo de medicamento: ", 1, 9);
+                            switch (opciones) {
+                                case 1:
+                                    tipoMedicamento = TipoMedicamento.ANALGESICOS;
+                                    break;
+                                case 2:
+                                    tipoMedicamento = TipoMedicamento.LAXANTES;
+                                    break;
+                                case 3:
+                                    tipoMedicamento = TipoMedicamento.ANTIINFECCIOSOS;
+                                    break;
+                                case 4:
+                                    tipoMedicamento = TipoMedicamento.ANTIDEPRESIVOS;
+                                    break;
+                                case 5:
+                                    tipoMedicamento = TipoMedicamento.ANTITUSIVOS;
+                                    break;
+                                case 6:
+                                    tipoMedicamento = TipoMedicamento.MUCOLITICOS;
+                                    break;
+                                case 7:
+                                    tipoMedicamento = TipoMedicamento.ANTIACIDOS;
+                                    break;
+                                case 8:
+                                    tipoMedicamento = TipoMedicamento.ANTIULCEROSOS;
+                                    break;
+                                case 9:
+                                    tipoMedicamento = TipoMedicamento.ANTIFIARREICOS;
+                                    break;
+                            }
+
                             comoTomar = IO_ES.leerCadena("Introduzca el método para consumir el medicamento: ");
                             efectosAdversos = IO_ES.leerCadena("Introduzca los efectos adversos del medicamentos: ");
-                            MISPRODUCTOS[contadorProdcutos] = new Medicamento(codigo, nombre, descripcion, precio, unidades, comoTomar, efectosAdversos);
+                            MISPRODUCTOS[contadorProdcutos] = new Medicamento(codigo, nombre, descripcion, precio, unidades, tipoMedicamento, comoTomar, efectosAdversos);
                             contadorProdcutos++;
                             IO_ES.escribirLN(Color.verde() + "Se ha añadido un medicamento" + Color.reset());
                         }
