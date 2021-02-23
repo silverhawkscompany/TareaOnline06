@@ -7,7 +7,8 @@ package estructuraDatos;
 
 /**
  *
- * @author Semipresencial 1º
+ * @author Daniel Díaz González
+ * @version 1.0
  */
 public class Enumerados {
     public enum Categoria {
