@@ -13,11 +13,13 @@ import estructuraDatos.Enumerados.Categoria;
  * @version 1.0
  */
 public class CPrincipal {
+
     private static final int TAMANIO_ARRAY = 50;
     private static final Cliente[] MISCLIENTES = new Cliente[TAMANIO_ARRAY];
     private static int contadorClientes = 0;
     private static Productos[] MISPRODUCTOS = new Productos[TAMANIO_ARRAY];
     private static int contadorProdcutos = 0;
+
     /**
      * @param args Menu principal donde se inicia la ejecución del programa
      */
@@ -79,15 +81,13 @@ public class CPrincipal {
 
     }
 
-    
-
     /**
      *
      * @param id DNI o NIF del cliente que deseamos buscar
      * @return Devuelve true o false, si el cliente ha sido encontrado
      */
     public static Cliente buscarClientes(String id) {
-        Cliente cliente = null ;
+        Cliente cliente = null;
         for (int i = 0; i < MISCLIENTES.length; i++) {
             if (MISCLIENTES[i] != null && MISCLIENTES[i].getId().equalsIgnoreCase(id)) {
                 cliente = MISCLIENTES[i];
@@ -121,10 +121,9 @@ public class CPrincipal {
         IO_ES.escribirLN("\n---------------------------------------");
         IO_ES.escribirLN("AÑADIR CLIENTE");
         id = IO_ES.leerCadena("Introduzca el NIF/DNI del cliente: ", 9);
-        if (buscarClientes(id)!= null) {
+        if (buscarClientes(id) != null) {
             IO_ES.escribirLN(Color.rojo() + "Ya hay un cliente dado de alta con ese DNI/NIF" + Color.reset());
-        }
-        else if (ValidarDatos.validarNif(id)) {
+        } else if (ValidarDatos.validarNif(id)) {
             nombre = IO_ES.leerCadena("Introduzca el nombre: ");
             direccion = IO_ES.leerCadena("Introduzca la dirección: ");
             telefono = IO_ES.leerInteger("Introduzca el teléfono: ");
@@ -135,8 +134,7 @@ public class CPrincipal {
             } else {
                 IO_ES.escribirLN(Color.rojo() + "El numero de teléfono no es correcto" + Color.reset());
             }
-        }
-        else {
+        } else {
             IO_ES.escribirLN(Color.rojo() + "El DNI/NIF es incorrecto" + Color.reset());
         }
     }
@@ -286,12 +284,11 @@ public class CPrincipal {
             case 2:
                 buscar = IO_ES.leerCadena("Introduzca el DNI/NIF: ", 9);
                 for (int i = 0; i < MISCLIENTES.length && !encontrado; i++) {
-                    if (MISCLIENTES[i] != null && buscarClientes(buscar) && MISCLIENTES[i].getBaja() != true) {
+                    if (MISCLIENTES[i] != null && buscarClientes(buscar) != null && MISCLIENTES[i].getBaja() == false) {
                         encontrado = true;
                         IO_ES.escribirLN("---------------------------------------");
                         IO_ES.escribirLN(MISCLIENTES[i].toString());
-                    }
-                    if (MISCLIENTES[i] != null && MISCLIENTES[i].getBaja()) {
+                    } else if (MISCLIENTES[i].getBaja()) {
                         encontrado = true;
                         IO_ES.escribirLN(Color.rojo() + "El cliente esta dado de baja" + Color.reset());
                     }
@@ -322,7 +319,7 @@ public class CPrincipal {
      */
     public static void aniadirProducto() {
         String codigo, nombre, descripcion, comoTomar, efectosAdversos;
-        TipoMedicamento tipoMedicamento = TipoMedicamento.ANALGESICOS;
+        TipoMedicamento tipoMedicamento = null;
         int dosisUnidades;
         double descuento;
         double precio;
@@ -331,6 +328,7 @@ public class CPrincipal {
         boolean correcto = false;
         int tipoProducto;
         int opciones;
+        Categoria categoria = null;
 
         IO_ES.escribirLN("\n---------------------------------------");
         IO_ES.escribirLN("AÑADIR PRODUCTO");
@@ -342,10 +340,9 @@ public class CPrincipal {
                     if (!Productos.comprobarCodigo(codigo)) {
                         codigo = "X";
                     }
-                    if (buscarProductos(codigo)) {
+                    if (buscarProductos(codigo) != null) {
                         IO_ES.escribirLN("El código del medicamento ya esta asignado");
-                    }
-                    if (!buscarProductos(codigo)) {
+                    } else {
                         nombre = IO_ES.leerCadena("Introduzca el nombre del medicamento: ");
                         for (int i = 0; i < MISPRODUCTOS.length; i++) {
                             if (MISPRODUCTOS[i] != null && MISPRODUCTOS[i].getNombre().equalsIgnoreCase(nombre)) {
@@ -402,10 +399,9 @@ public class CPrincipal {
                     if (!Productos.comprobarCodigo(codigo)) {
                         codigo = "X";
                     }
-                    if (buscarProductos(codigo)) {
+                    if (buscarProductos(codigo) != null) {
                         IO_ES.escribirLN(Color.rojo() + "El código del producto ya esta asignado" + Color.reset());
-                    }
-                    if (!buscarProductos(codigo)) {
+                    } else {
                         nombre = IO_ES.leerCadena("Introduzca el nombre del producto de Parafarmacia: ");
                         for (int i = 0; i < MISPRODUCTOS.length; i++) {
                             if (MISPRODUCTOS[i] != null && MISPRODUCTOS[i].getNombre().equalsIgnoreCase(nombre)) {
@@ -417,9 +413,55 @@ public class CPrincipal {
                             descripcion = IO_ES.leerCadena("Introduzca la descripción del producto de Parafarmacia: ");
                             precio = IO_ES.leerReallargo("Introduzca el precio del producto de Parafarmacia: ");
                             unidades = IO_ES.leerInteger("Introduzca las unidades del producto de Parafarmacia: ", 0);
+                            IO_ES.escribirLN("1. DENTAL \n2. FACIAL \n3. GELES \n4. CABELLO \n5. ANTIMOSQUITOS \n6. INTIMA \n7. NASAL \n8. OCULAR \n9. BOTIQUIN \n10. OIDOS \n11. TOALLITAS \n12. LIMPIEZA \n13. HOGAR \n14. MASCARILLAS");
+                            opciones = IO_ES.leerInteger("Indique el tipo de Parafarmacia: ", 1, 13);
+                            switch (opciones) {
+                                case 1:
+                                    categoria = Categoria.DENTAL;
+                                    break;
+                                case 2:
+                                    categoria = Categoria.FACIAL;
+                                    break;
+                                case 3:
+                                    categoria = Categoria.GELES;
+                                    break;
+                                case 4:
+                                    categoria = Categoria.CABELLO;
+                                    break;
+                                case 5:
+                                    categoria = Categoria.ANTIMOSQUITOS;
+                                    break;
+                                case 6:
+                                    categoria = Categoria.INTIMA;
+                                    break;
+                                case 7:
+                                    categoria = Categoria.NASAL;
+                                    break;
+                                case 8:
+                                    categoria = Categoria.OCULAR;
+                                    break;
+                                case 9:
+                                    categoria = Categoria.BOTIQUIN;
+                                    break;
+                                case 10:
+                                    categoria = Categoria.OIDOS;
+                                    break;
+                                case 11:
+                                    categoria = Categoria.TOALLITAS;
+                                    break;
+                                case 12:
+                                    categoria = Categoria.LIMPIEZA;
+                                    break;
+                                case 13:
+                                    categoria = Categoria.HOGAR;
+                                    break;
+                                case 14:
+                                    categoria = Categoria.MASCARILLAS;
+                                    break;
+                            }
                             dosisUnidades = IO_ES.leerInteger("Introduzca las unidades de las dosis: ", 0);
                             descuento = IO_ES.leerReallargo("Introduzca el descuento (en porcentaje): ");
-                            MISPRODUCTOS[contadorProdcutos] = new ParaFarmacia(codigo, nombre, descripcion, precio, unidades, dosisUnidades, descuento);
+                            MISPRODUCTOS[contadorProdcutos] = new ParaFarmacia(codigo, nombre, descripcion, precio, unidades, categoria, dosisUnidades, descuento);
                             contadorProdcutos++;
                             IO_ES.escribirLN(Color.verde() + "Se ha añadido un producto de Parafarmacia" + Color.reset());
                         }
@@ -485,7 +527,7 @@ public class CPrincipal {
         IO_ES.escribirLN("ELIMINAR PRODUCTO");
         buscar = IO_ES.leerCadena("Indique el código del producto: ");
         for (int i = 0; i < MISPRODUCTOS.length; i++) {
-            if (MISPRODUCTOS[i] != null && buscarProductos(buscar)) {
+            if (MISPRODUCTOS[i] != null && buscarProductos(buscar) != null) {
                 encontrado = true;
                 IO_ES.escribirLN("---------------------------------------");
                 IO_ES.escribirLN(MISPRODUCTOS[i].toString());
