@@ -20,11 +20,11 @@ abstract public class Producto {
     /**
      * Método constructor
      *
-     * @param codigo del Producto
-     * @param nombre del Producto
-     * @param descripcion del Producto
-     * @param precio del Producto
-     * @param unidades del Producto
+     * @param codigo Código del Producto
+     * @param nombre Nombre del Producto
+     * @param descripcion Descripción del Producto
+     * @param precio Precio del Producto
+     * @param unidades Unidades del Producto
      */
     public Producto(String codigo, String nombre, String descripcion, double precio, int unidades) {
         this.codigo = codigo;
@@ -47,7 +47,7 @@ abstract public class Producto {
     /**
      * Constructor copia
      *
-     * @param producto
+     * @param producto Objeto Producto
      */
     public Producto(Producto producto) {
         this.codigo = producto.codigo;

@@ -32,7 +32,7 @@ public class Cliente {
     /**
      * Construcotr copia
      *
-     * @param cliente
+     * @param cliente Objeto Cliente
      */
     public Cliente(Cliente cliente) {
         this.id = cliente.id;
@@ -128,7 +128,7 @@ public class Cliente {
 
     /**
      *
-     * @param baja
+     * @param baja Nueva baja
      */
     public void setBaja(boolean baja) {
         this.baja = baja;

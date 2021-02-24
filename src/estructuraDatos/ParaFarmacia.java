@@ -16,14 +16,14 @@ public class ParaFarmacia extends Producto {
     /**
      * Contructor de la clase ParaFarmacia
      *
-     * @param codigo
-     * @param nombre
-     * @param descripcion
-     * @param precio
-     * @param unidades
-     * @param categoria
-     * @param dosisUnidades
-     * @param descuento
+     * @param codigo Código del producto de Parafarmacia
+     * @param nombre Nombre del producto de Parafarmacia
+     * @param descripcion Descripción del producto de Parafarmacia
+     * @param precio Precio del producto de Parafarmacia
+     * @param unidades Unidades del producto de Parafarmacia
+     * @param categoria Categoria del producto de Parafarmacia
+     * @param dosisUnidades Dosis del producto de Parafarmacia
+     * @param descuento Descuento del producto de Parafarmacia
      */
     public ParaFarmacia(String codigo, String nombre, String descripcion, double precio, int unidades, Categoria categoria, int dosisUnidades, double descuento) {
         super(codigo, nombre, descripcion, precio, unidades);
@@ -35,7 +35,7 @@ public class ParaFarmacia extends Producto {
     /**
      * Constructor copia
      *
-     * @param paraFarmacia
+     * @param paraFarmacia Objeto Parafarmacia
      */
     public ParaFarmacia(ParaFarmacia paraFarmacia) {
         super(paraFarmacia.getCodigo(), paraFarmacia.getNombre(), paraFarmacia.getDescripcion(), paraFarmacia.getPrecio(), paraFarmacia.getUnidades());

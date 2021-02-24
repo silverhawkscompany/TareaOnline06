@@ -2,8 +2,6 @@ package principal;
 
 import utilidades.*;
 import estructuraDatos.*;
-import static estructuraDatos.Enumerados.TipoMedicamento.*;
-import static estructuraDatos.Enumerados.Categoria.*;
 import estructuraDatos.Enumerados.TipoMedicamento;
 import estructuraDatos.Enumerados.Categoria;
 
@@ -83,7 +81,7 @@ public class CPrincipal {
     /**
      *
      * @param id DNI o NIF del cliente que deseamos buscar
-     * @return Devuelve true o false, si el cliente ha sido encontrado
+     * @return Devuelve el cliente si ha sido encontrado
      */
     public static Cliente buscarClientes(String id) {
         Cliente cliente = null;
@@ -98,7 +96,7 @@ public class CPrincipal {
     /**
      *
      * @param codigo Código del producto que deseamos buscar
-     * @return Devuelve true o false, si encuentra el producto
+     * @return Devuelve el producto si ha sido encontrado
      */
     public static Producto buscarProductos(String codigo) {
         Producto productos = null;

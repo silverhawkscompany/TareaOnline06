@@ -16,14 +16,14 @@ public class Medicamento extends Producto {
     /**
      * Contructor de la clase Medicamentos
      *
-     * @param codigo
-     * @param nombre
-     * @param descripcion
-     * @param precio
-     * @param unidades
-     * @param tipoMedicamento
-     * @param comoTomar
-     * @param efectosAdversos
+     * @param codigo Código del Medicamento
+     * @param nombre Nombre del Medicamento
+     * @param descripcion Descripción del Medicamento
+     * @param precio Precio del Medicamento
+     * @param unidades Unidades del Medicamento
+     * @param tipoMedicamento Tipo del Medicamento
+     * @param comoTomar Como tomar el Medicamento
+     * @param efectosAdversos Efectos adversos del Medicamento
      */
     public Medicamento(String codigo, String nombre, String descripcion, double precio, int unidades, TipoMedicamento tipoMedicamento, String comoTomar, String efectosAdversos) {
         super(codigo, nombre, descripcion, precio, unidades);
@@ -35,7 +35,7 @@ public class Medicamento extends Producto {
     /**
      * Constructor copia
      *
-     * @param medicamento
+     * @param medicamento Objeto Medicamento
      */
     public Medicamento(Medicamento medicamento) {
         super(medicamento.getCodigo(), medicamento.getNombre(), medicamento.getDescripcion(), medicamento.getPrecio(), medicamento.getUnidades());
