@@ -44,6 +44,23 @@ abstract public class Producto {
         }
     }
 
+    /**
+     * Constructor copia
+     *
+     * @param producto
+     */
+    public Producto(Producto producto) {
+        this.codigo = producto.codigo;
+        this.nombre = producto.nombre;
+        this.descripcion = producto.descripcion;
+        this.precio = producto.precio;
+        this.unidades = producto.unidades;
+    }
+
+    /**
+     *
+     * @return evuelve los datos del prodcuto
+     */
     @Override
     public String toString() {
         String datosProducto = "Código: " + this.codigo + "\nNombre: " + this.nombre + "\nDescripción: " + this.descripcion + "\nPrecio: " + this.precio + "\nUnidades: " + this.unidades;

@@ -32,6 +32,22 @@ public class ParaFarmacia extends Producto {
         this.descuento = descuento;
     }
 
+    /**
+     * Constructor copia
+     *
+     * @param paraFarmacia
+     */
+    public ParaFarmacia(ParaFarmacia paraFarmacia) {
+        super(paraFarmacia.getCodigo(), paraFarmacia.getNombre(), paraFarmacia.getDescripcion(), paraFarmacia.getPrecio(), paraFarmacia.getUnidades());
+        this.categoria = paraFarmacia.categoria;
+        this.dosisUnidades = paraFarmacia.dosisUnidades;
+        this.descuento = paraFarmacia.descuento;
+    }
+
+    /**
+     *
+     * @return Devuelve los datos de Parafarmacia
+     */
     @Override
     public String toString() {
         String datosParaFarmacia = "Código: " + this.codigo + "\nNombre: " + this.nombre + "\nDescripción: " + this.descripcion + "\nPrecio: " + this.precio + "\nUnidades: " + this.unidades + "\nCategoria: " + this.categoria + "\nDosis de las unidades: " + this.dosisUnidades + "\nDescuento: " + this.descuento;

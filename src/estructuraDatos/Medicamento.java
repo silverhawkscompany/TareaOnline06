@@ -32,6 +32,22 @@ public class Medicamento extends Producto {
         this.efectosAdversos = efectosAdversos;
     }
 
+    /**
+     * Constructor copia
+     *
+     * @param medicamento
+     */
+    public Medicamento(Medicamento medicamento) {
+        super(medicamento.getCodigo(), medicamento.getNombre(), medicamento.getDescripcion(), medicamento.getPrecio(), medicamento.getUnidades());
+        this.tipoMedicamento = medicamento.tipoMedicamento;
+        this.comoTomar = medicamento.comoTomar;
+        this.efectosAdversos = medicamento.efectosAdversos;
+    }
+
+    /**
+     *
+     * @return Devuelve los datos del Medicamento
+     */
     @Override
     public String toString() {
         String datosMedicamento = "Código: " + this.codigo + "\nNombre: " + this.nombre + "\nDescripción: " + this.descripcion + "\nPrecio: " + this.precio + "\nUnidades: " + this.unidades + "\nTipo del medicamento: " + this.tipoMedicamento + "\nToma del medicamento: " + this.comoTomar + "\nEfectos adversos: " + this.efectosAdversos;

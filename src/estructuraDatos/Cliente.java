@@ -29,6 +29,23 @@ public class Cliente {
         this.baja = false;
     }
 
+    /**
+     * Construcotr copia
+     *
+     * @param cliente
+     */
+    public Cliente(Cliente cliente) {
+        this.id = cliente.id;
+        this.nombre = cliente.nombre;
+        this.direccion = cliente.direccion;
+        this.telefono = cliente.telefono;
+        this.baja = cliente.baja;
+    }
+
+    /**
+     *
+     * @return Devuleve los datos del cliente
+     */
     @Override
     public String toString() {
         String datosCliente = "DNI: " + this.id + "\nNombre: " + this.nombre + "\nTeléfono: " + this.telefono + "\nDirección: " + this.direccion;
