@@ -17,7 +17,7 @@ public class CPrincipal {
     private static final int TAMANIO_ARRAY = 50;
     private static final Cliente[] MISCLIENTES = new Cliente[TAMANIO_ARRAY];
     private static int contadorClientes = 0;
-    private static Productos[] MISPRODUCTOS = new Productos[TAMANIO_ARRAY];
+    private static Producto[] MISPRODUCTOS = new Producto[TAMANIO_ARRAY];
     private static int contadorProdcutos = 0;
 
     /**
@@ -100,8 +100,8 @@ public class CPrincipal {
      * @param codigo Código del producto que deseamos buscar
      * @return Devuelve true o false, si encuentra el producto
      */
-    public static Productos buscarProductos(String codigo) {
-        Productos productos = null;
+    public static Producto buscarProductos(String codigo) {
+        Producto productos = null;
         for (int i = 0; i < MISPRODUCTOS.length; i++) {
             if (MISPRODUCTOS[i] != null && MISPRODUCTOS[i].getCodigo().equalsIgnoreCase(codigo)) {
                 productos = MISPRODUCTOS[i];
@@ -336,7 +336,7 @@ public class CPrincipal {
             switch (tipoProducto) {
                 case 1:
                     codigo = IO_ES.leerCadena("Introduzca el código del medicamento: ");
-                    if (!Productos.comprobarCodigo(codigo)) {
+                    if (!Producto.comprobarCodigo(codigo)) {
                         codigo = "X";
                     }
                     if (buscarProductos(codigo) != null && codigo != "X") {
@@ -394,7 +394,7 @@ public class CPrincipal {
                     break;
                 case 2:
                     codigo = IO_ES.leerCadena("Introduzca el código del producto de Parafarmacia: ");
-                    if (!Productos.comprobarCodigo(codigo)) {
+                    if (!Producto.comprobarCodigo(codigo)) {
                         codigo = "X";
                     }
                     if (buscarProductos(codigo) != null && codigo != "X") {

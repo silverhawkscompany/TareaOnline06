@@ -7,7 +7,7 @@ import estructuraDatos.Enumerados.Categoria;
  * @author Daniel Díaz González
  * @version 1.0
  */
-public class ParaFarmacia extends Productos {
+public class ParaFarmacia extends Producto {
 
     private Categoria categoria;
     private int dosisUnidades;

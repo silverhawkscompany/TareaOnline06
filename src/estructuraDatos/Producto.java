@@ -9,7 +9,7 @@ import utilidades.IO_ES;
  * @author Daniel Díaz González
  * @version 1.0
  */
-abstract public class Productos {
+abstract public class Producto {
 
     protected String codigo;
     protected String nombre;
@@ -26,7 +26,7 @@ abstract public class Productos {
      * @param precio del Producto
      * @param unidades del Producto
      */
-    public Productos(String codigo, String nombre, String descripcion, double precio, int unidades) {
+    public Producto(String codigo, String nombre, String descripcion, double precio, int unidades) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.descripcion = descripcion;
