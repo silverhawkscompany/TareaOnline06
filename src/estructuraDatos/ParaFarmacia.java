@@ -8,10 +8,11 @@ import estructuraDatos.Enumerados.Categoria;
  * @version 1.0
  */
 public class ParaFarmacia extends Productos {
+
     private Categoria categoria;
     private int dosisUnidades;
     private double descuento;
-    
+
     /**
      * Contructor de la clase ParaFarmacia
      *
@@ -24,7 +25,7 @@ public class ParaFarmacia extends Productos {
      * @param dosisUnidades
      * @param descuento
      */
-    public ParaFarmacia(String codigo, String nombre, String descripcion, double precio, int unidades, Categoria categoria,int dosisUnidades, double descuento) {
+    public ParaFarmacia(String codigo, String nombre, String descripcion, double precio, int unidades, Categoria categoria, int dosisUnidades, double descuento) {
         super(codigo, nombre, descripcion, precio, unidades);
         this.categoria = categoria;
         this.dosisUnidades = dosisUnidades;
@@ -33,18 +34,19 @@ public class ParaFarmacia extends Productos {
 
     @Override
     public String toString() {
-        String datosParaFarmacia = "Código: " + this.codigo + "\nNombre: " + this.nombre + "\nDescripción: " + this.descripcion + "\nPrecio: " + this.precio + "\nUnidades: " + this.unidades + "\nDosis de las unidades: " + this.dosisUnidades + "\nDescuento: " + this.descuento;
+        String datosParaFarmacia = "Código: " + this.codigo + "\nNombre: " + this.nombre + "\nDescripción: " + this.descripcion + "\nPrecio: " + this.precio + "\nUnidades: " + this.unidades + "\nCategoria: " + this.categoria + "\nDosis de las unidades: " + this.dosisUnidades + "\nDescuento: " + this.descuento;
         return datosParaFarmacia;
     }
 
     ///****************************Métodos getter****************************///
     /**
-     * 
+     *
      * @return Devuelve la categgoria del producto de Parafarmacia
      */
-    public Categoria getCategoria(){
+    public Categoria getCategoria() {
         return this.categoria;
     }
+
     /**
      *
      * @return Devuelve las dosis de cada producto
@@ -63,12 +65,13 @@ public class ParaFarmacia extends Productos {
 
     ///****************************Métodos setter****************************///
     /**
-     * 
+     *
      * @param categoria Nueva categoria del producto de Parafarmacia
      */
-    public void setCategoria(Categoria categoria){
+    public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
+
     /**
      *
      * @param dosisUnidades Nuevas dosis para el producto
